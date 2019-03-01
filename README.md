@@ -4,8 +4,11 @@ This is the final group project for CS 492.
 
 Members:
   Megan Liles
+  
   Johnathan Di Carlo
+  
   John Magenheimer
+  
   Scott Waddington
   
  Project Description:
@@ -16,6 +19,8 @@ Members:
   
   The three acitivites will be:
     -grocery list
+    
     -view recipe
+    
     -view saved recipes
     
