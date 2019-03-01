@@ -3,6 +3,7 @@ README.md
 This is the final group project for CS 492.
 
 Members:
+  
   Megan Liles
   
   Johnathan Di Carlo
@@ -17,10 +18,12 @@ Members:
   The user will be able to send their grocery list to someone via messages for the implicit intent.
   The user can save recipes and those will be added to the SQL Database as well as the grocery items.
   
+  
   The three acitivites will be:
-    -grocery list
+  
+    grocery list
     
-    -view recipe
+    view recipe
     
-    -view saved recipes
+    view saved recipes
     
