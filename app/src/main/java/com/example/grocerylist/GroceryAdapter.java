@@ -77,6 +77,7 @@ public class GroceryAdapter extends RecyclerView.Adapter<GroceryAdapter.GroceryV
             int position = getAdapterPosition();
             mGroceryList.remove(adapterPositionToArrayIndex(position));
             notifyItemRemoved(position);
+
         }
     }
 }

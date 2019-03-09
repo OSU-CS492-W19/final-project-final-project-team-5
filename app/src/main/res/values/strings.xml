@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">GroceryList</string>
+    <string name="nav_search">Search Recipes</string>
+    <string name="nav_saved_recipes">Saved Recipes</string>
+    <string name="nav_grocery_list">Grocery List</string>
 </resources>
