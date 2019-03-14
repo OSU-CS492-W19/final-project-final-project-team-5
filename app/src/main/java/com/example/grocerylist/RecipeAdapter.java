@@ -10,24 +10,24 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.example.grocerylist.utils.RecipieUtils;
+import com.example.grocerylist.utils.RecipeUtils;
 
 import java.util.ArrayList;
 
-public class RecipieAdapter extends RecyclerView.Adapter<RecipieAdapter.RecipieViewHolder> {
-    private ArrayList<RecipieUtils.RecipeInfo> mRecipieList;
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipieViewHolder> {
+    private ArrayList<RecipeUtils.RecipeInfo> mRecipieList;
     private OnItemClickListener mItemClickListener;
 
     public interface OnItemClickListener{
-        void onItemClicked(RecipieUtils.RecipeInfo recipeInfo);
+        void onItemClicked(RecipeUtils.RecipeInfo recipeInfo);
     }
 
-    public RecipieAdapter(OnItemClickListener itemClickListener){
-        mRecipieList = new ArrayList<RecipieUtils.RecipeInfo>();
+    public RecipeAdapter(OnItemClickListener itemClickListener){
+        mRecipieList = new ArrayList<RecipeUtils.RecipeInfo>();
         mItemClickListener = itemClickListener;
     }
 
-    public void updateItems(ArrayList<RecipieUtils.RecipeInfo> items) {
+    public void updateItems(ArrayList<RecipeUtils.RecipeInfo> items) {
         mRecipieList = items;
         notifyDataSetChanged();
     }
@@ -47,7 +47,7 @@ public class RecipieAdapter extends RecyclerView.Adapter<RecipieAdapter.RecipieV
 
     @Override
     public void onBindViewHolder(@NonNull RecipieViewHolder recipieViewHolder, int i) {
-        RecipieUtils.RecipeInfo item = mRecipieList.get(adapterPositionToArrayIndex(i));
+        RecipeUtils.RecipeInfo item = mRecipieList.get(adapterPositionToArrayIndex(i));
         recipieViewHolder.bind(item);
     }
 
@@ -79,7 +79,7 @@ public class RecipieAdapter extends RecyclerView.Adapter<RecipieAdapter.RecipieV
 
         }
 
-        public void bind(RecipieUtils.RecipeInfo item){
+        public void bind(RecipeUtils.RecipeInfo item){
 
             mTitle.setText(item.recipeInfox.Title);
             mCategory.setText(item.recipeInfox.Category);
@@ -101,7 +101,7 @@ public class RecipieAdapter extends RecyclerView.Adapter<RecipieAdapter.RecipieV
 
         @Override
         public void onClick(View v) {
-            RecipieUtils.RecipeInfo recipeInfo = mRecipieList.get(getAdapterPosition());
+            RecipeUtils.RecipeInfo recipeInfo = mRecipieList.get(getAdapterPosition());
             mItemClickListener.onItemClicked(recipeInfo);
         }
     }

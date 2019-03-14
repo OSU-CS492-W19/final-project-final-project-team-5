@@ -1,4 +1,4 @@
-package com.example.grocerylist.data.Recipie;
+package com.example.grocerylist.data.Recipe;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -7,29 +7,29 @@ import android.util.Log;
 
 import java.util.List;
 
-public class RecipieDataRepository {
-    private RecipieDao mRecipieDao;
+public class RecipeDataRepository {
+    private RecipeDao mRecipieDao;
 
-    public RecipieDataRepository(Application application) {
+    public RecipeDataRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
         mRecipieDao = db.locationDao();
     }
 
-    public void insertLocationData(RecipieData repo) {
+    public void insertLocationData(RecipeData repo) {
         new InsertAsyncTask(mRecipieDao).execute(repo);
     }
 
-    public void deleteLocationData(RecipieData repo) {
+    public void deleteLocationData(RecipeData repo) {
         new DeleteAsyncTask(mRecipieDao).execute(repo);
     }
 
-    public LiveData<List<RecipieData>> getAllRecipies() {
+    public LiveData<List<RecipeData>> getAllRecipies() {
         return mRecipieDao.getRecipies();
     }
 
-    public LiveData<RecipieData> getRecipieByName(String recipie_id) {
+    public LiveData<RecipeData> getRecipieByName(String recipie_id) {
         Log.e("newFlag", recipie_id);
-        LiveData<RecipieData> dat = mRecipieDao.getRecipie(recipie_id);
+        LiveData<RecipeData> dat = mRecipieDao.getRecipie(recipie_id);
         if (dat.getValue() == null) {
             Log.e("get1", "null");
         }
@@ -39,28 +39,28 @@ public class RecipieDataRepository {
         return dat;
     }
 
-    private static class InsertAsyncTask extends AsyncTask<RecipieData, Void, Void> {
-        private RecipieDao mAsyncTaskDao;
-        InsertAsyncTask(RecipieDao dao) {
+    private static class InsertAsyncTask extends AsyncTask<RecipeData, Void, Void> {
+        private RecipeDao mAsyncTaskDao;
+        InsertAsyncTask(RecipeDao dao) {
             mAsyncTaskDao = dao;
         }
 
         @Override
-        protected Void doInBackground(RecipieData... recipieData) {
+        protected Void doInBackground(RecipeData... recipieData) {
             Log.e("flagb", recipieData[0].recipie_id);
             mAsyncTaskDao.insert(recipieData[0]);
             return null;
         }
     }
 
-    private static class DeleteAsyncTask extends AsyncTask<RecipieData, Void, Void> {
-        private RecipieDao mAsyncTaskDao;
-        DeleteAsyncTask(RecipieDao dao) {
+    private static class DeleteAsyncTask extends AsyncTask<RecipeData, Void, Void> {
+        private RecipeDao mAsyncTaskDao;
+        DeleteAsyncTask(RecipeDao dao) {
             mAsyncTaskDao = dao;
         }
 
         @Override
-        protected Void doInBackground(RecipieData... recipieData) {
+        protected Void doInBackground(RecipeData... recipieData) {
             mAsyncTaskDao.delete(recipieData[0]);
             return null;
         }

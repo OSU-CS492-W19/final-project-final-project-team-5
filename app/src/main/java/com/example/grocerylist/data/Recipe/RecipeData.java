@@ -7,8 +7,8 @@ import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
-@Entity(tableName = "recipies")
-public  class RecipieData implements  Serializable{
+@Entity(tableName = "recipes")
+public  class RecipeData implements  Serializable{
     @NonNull
     @PrimaryKey
     public String recipie_id;

@@ -1,4 +1,4 @@
-package com.example.grocerylist.data.Recipie;
+package com.example.grocerylist.data.Recipe;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -10,16 +10,16 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 @Dao
-public interface RecipieDao {
+public interface RecipeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(RecipieData recipieData);
+    void insert(RecipeData recipeData);
 
     @Delete
-    void delete(RecipieData recipieData);
+    void delete(RecipeData recipeData);
 
-    @Query("SELECT * FROM recipies")
-    LiveData<List<RecipieData>> getRecipies();
+    @Query("SELECT * FROM recipes")
+    LiveData<List<RecipeData>> getRecipies();
 
-    @Query("SELECT * FROM recipies WHERE recipie_id = :recipie LIMIT 1")
-    LiveData<RecipieData> getRecipie(String recipie);
+    @Query("SELECT * FROM recipes WHERE recipie_id = :recipie LIMIT 1")
+    LiveData<RecipeData> getRecipie(String recipie);
 }

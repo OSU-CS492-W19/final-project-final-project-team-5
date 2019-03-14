@@ -18,10 +18,10 @@ import android.widget.Button;
 
 import com.example.grocerylist.utils.RecipeUtils;
 
-public class SavedRecipeActivity extends AppCompatActivity implements RecipieAdapter.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdapter.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView mRecipieistRV;
-    private RecipieAdapter mRecipieAdapter;
+    private RecipeAdapter mRecipieAdapter;
     private DrawerLayout mDrawerLayout;
 
 
@@ -35,7 +35,7 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipieAda
         mRecipieistRV.setLayoutManager(new LinearLayoutManager(this));
         mRecipieistRV.setHasFixedSize(true);
 
-        mRecipieAdapter = new RecipieAdapter(this);
+        mRecipieAdapter = new RecipeAdapter(this);
         mRecipieistRV.setAdapter(mRecipieAdapter);
 
         mRecipieistRV.setItemAnimator(new DefaultItemAnimator());
@@ -60,7 +60,7 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipieAda
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                ((RecipieAdapter.RecipieViewHolder) viewHolder).removeFromList();
+                ((RecipeAdapter.RecipieViewHolder) viewHolder).removeFromList();
 
             }
         };

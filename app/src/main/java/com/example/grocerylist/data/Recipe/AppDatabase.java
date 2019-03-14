@@ -1,11 +1,11 @@
-package com.example.grocerylist.data.Recipie;
+package com.example.grocerylist.data.Recipe;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {RecipieData.class}, version = 1)
+@Database(entities = {RecipeData.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
 
@@ -21,5 +21,5 @@ public abstract class AppDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    public abstract RecipieDao locationDao();
+    public abstract RecipeDao locationDao();
 }
