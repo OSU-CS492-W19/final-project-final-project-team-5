@@ -4,25 +4,28 @@ import android.net.Uri;
 import android.util.Log;
 import com.google.gson.Gson;
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import com.example.grocerylist.data.recipeSearchResult;
 
 
-public class RecipieUtils {
+public class RecipeUtils {
 
 //    public static final String EXTRA_FORECAST_ITEM = "com.example.android.lifecycleweather.utils.ForecastItem";
 
-    private final static String RECIPIE_BASE_URL = "https://api2.bigoven.com/Recipe";
-    private final static String RECIPIE_SEARCH_BASE_URL = "https://api2.bigoven.com/Recipes";
-    private final static String RECIPIE_PAGE_PARAM = "pg";
+    private final static String RECIPE_BASE_URL = "https://api2.bigoven.com/Recipe";
+    private final static String RECIPE_SEARCH_BASE_URL = "https://api2.bigoven.com/Recipes";
+    private final static String RECIPE_PAGE_PARAM = "pg";
     private final static String RECIPES_PER_PAGE_PARAM = "rpp";
-    private final static String RECIPIE_QUERY_PARAM = "Title_kw";
-    private final static String RECIPIE_APPID_PARAM = "api_key";
+    private final static String RECIPE_QUERY_PARAM = "Title_kw";
+    private final static String RECIPE_APPID_PARAM = "api_key";
 
     /*
      * Set your own APPID here.
      */
     private final static String APPID = "Rc3kEhQ293h59oU9Z853fw48CmI1H1Js";
 
-    //Recipie search class
+    //Recipe search class
     public static class RecipeSearchResult implements Serializable {
         public int ResultCount;
         public RecipeInfox[] Results;
@@ -40,7 +43,7 @@ public class RecipieUtils {
     }
 
 
-    //Recipie Class
+    //Recipe Class
     public static class RecipeResult implements Serializable {
         public String ActiveMinutes;
         public String AllCategoriesText;//Pipe seperated list
@@ -94,33 +97,50 @@ public class RecipieUtils {
         public String TransFat;
     }
 
-    public static String buildRecipieSearchURL(String title_kw, int page, int recipies_per_page) {
-        return Uri.parse(RECIPIE_SEARCH_BASE_URL).buildUpon()
-                .appendQueryParameter(RECIPIE_QUERY_PARAM, title_kw)
-                .appendQueryParameter(RECIPIE_PAGE_PARAM, String.valueOf(page))
-                .appendQueryParameter(RECIPES_PER_PAGE_PARAM, String.valueOf(recipies_per_page))
-                .appendQueryParameter(RECIPIE_APPID_PARAM, APPID)
+    public static String buildRecipeSearchURL(String title_kw, int page, int Recipes_per_page) {
+        return Uri.parse(RECIPE_SEARCH_BASE_URL).buildUpon()
+                .appendQueryParameter(RECIPE_QUERY_PARAM, title_kw)
+                .appendQueryParameter(RECIPE_PAGE_PARAM, String.valueOf(page))
+                .appendQueryParameter(RECIPES_PER_PAGE_PARAM, String.valueOf(Recipes_per_page))
+                .appendQueryParameter(RECIPE_APPID_PARAM, APPID)
                 .build()
                 .toString();
     }
-    public static RecipeSearchResult parseRecipieSearchJson(String json) {
+    public static ArrayList<recipeSearchResult> parseRecipeSearchJson(String json) {
         Gson gson = new Gson();
         RecipeSearchResult result = gson.fromJson(json, RecipeSearchResult.class);
-        if (result != null && result != null) {
-            return result;
+        if (result != null && result.Results != null) {
+            ArrayList<recipeSearchResult> Results = new ArrayList<>();
+
+            for(RecipeInfox info : result.Results){
+                recipeSearchResult recipesearchsesult = new recipeSearchResult();
+
+                recipesearchsesult.Category = info.Category;
+                recipesearchsesult.Cuisine = info.Cuisine;
+                recipesearchsesult.Microcategory = info.Microcategory;
+                recipesearchsesult.RecipeID = info.RecipeID;
+                recipesearchsesult.ReviewCount = info.ReviewCount;
+                recipesearchsesult.Servings = info.Servings;
+                recipesearchsesult.StarRating = info.StarRating;
+                recipesearchsesult.Subcategory = info.Subcategory;
+                recipesearchsesult.Title = info.Title;
+
+                Results.add(recipesearchsesult);
+            }
+            return Results;
         } else {
             return null;
         }
     }
 
 
-    public static String buildRecipieURL(String recipie_id) {
-        return Uri.parse(RECIPIE_BASE_URL + "/" + recipie_id).buildUpon()
-                .appendQueryParameter(RECIPIE_APPID_PARAM, APPID)
+    public static String buildRecipeURL(String Recipe_id) {
+        return Uri.parse(RECIPE_BASE_URL + "/" + Recipe_id).buildUpon()
+                .appendQueryParameter(RECIPE_APPID_PARAM, APPID)
                 .build()
                 .toString();
     }
-    public static RecipeResult parseRecipieJson(String json) {
+    public static RecipeResult parseRecipeJson(String json) {
         Gson gson = new Gson();
         RecipeResult result = gson.fromJson(json, RecipeResult.class);
         if (result != null && result != null) {
