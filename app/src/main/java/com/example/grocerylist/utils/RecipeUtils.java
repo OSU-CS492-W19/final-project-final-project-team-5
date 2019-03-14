@@ -3,7 +3,7 @@ package com.example.grocerylist.utils;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.grocerylist.data.Recipie.RecipieData;
+import com.example.grocerylist.data.Recipe.RecipieData;
 import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.ArrayList;
