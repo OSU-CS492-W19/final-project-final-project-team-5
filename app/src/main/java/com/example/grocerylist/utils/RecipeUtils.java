@@ -2,6 +2,8 @@ package com.example.grocerylist.utils;
 
 import android.net.Uri;
 import android.util.Log;
+
+import com.example.grocerylist.data.Recipie.RecipieData;
 import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -150,5 +152,20 @@ public class RecipeUtils {
         }
     }
 
+    public static RecipieData makeRecipieData(RecipeInfox recipieInfox, RecipeResult recipeResult) {
+        RecipieData recipieData = new RecipieData();
+        recipieData.recipie_id = recipieInfox.RecipeID;
+
+        Gson gson = new Gson();
+        recipieData.recipe_infox_json = gson.toJson(recipieInfox);
+        recipieData.recipie_result_json = gson.toJson(recipeResult);
+
+        return recipieData;
+    }
+
+    public static class RecipeInfo implements Serializable{
+        public RecipeInfox recipeInfox;
+        public RecipeResult recipeResult;
+    }
 
 }
