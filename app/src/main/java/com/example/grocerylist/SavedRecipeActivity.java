@@ -16,9 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.grocerylist.utils.RecipieUtils;
+import com.example.grocerylist.utils.RecipeUtils;
 
-public class SavedRecipieActivity extends AppCompatActivity implements RecipieAdapter.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class SavedRecipeActivity extends AppCompatActivity implements RecipieAdapter.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView mRecipieistRV;
     private RecipieAdapter mRecipieAdapter;
@@ -85,8 +85,8 @@ public class SavedRecipieActivity extends AppCompatActivity implements RecipieAd
     }
 
     @Override
-    public void onItemClicked(RecipieUtils.RecipeInfo recipeInfo) {
-     ////Open Resipy Detail Activity Via Intent
+    public void onItemClicked(RecipeUtils.RecipeInfo recipeInfo) {
+     ////Open RecipeDetail Activity Via Intent
     }
 }
 
