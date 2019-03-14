@@ -1,4 +1,4 @@
-package com.example.grocerylist.data.Recipie;
+package com.example.grocerylist.data.Recipe;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
