@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -118,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements GroceryAdapter.On
         mDrawerLayout.closeDrawers();
         switch (menuItem.getItemId()) {
             case R.id.nav_search:
+                Intent searchRecipesIntent = new Intent(this, recipeSearchActivity.class);
+                startActivity(searchRecipesIntent);
                 return true;
             case R.id.nav_saved_recipes:
                 Intent savedRecipesIntent = new Intent(this, SavedRecipesActivity.class);

@@ -4,9 +4,45 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tv_recipe_result_item"
+        android:id="@+id/tv_recipe_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:layout_marginLeft="16dp"/>
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/tv_recipe_cuisine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/tv_recipe_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/tv_recipe_subcategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/tv_recipe_microcategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/tv_recipe_servings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/tv_recipe_review_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/tv_recipe_star_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"/>
+
+
 </LinearLayout>
