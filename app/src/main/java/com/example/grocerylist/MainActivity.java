@@ -1,6 +1,5 @@
 package com.example.grocerylist;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -123,8 +122,10 @@ public class MainActivity extends AppCompatActivity implements GroceryAdapter.On
                 startActivity(searchRecipesIntent);
                 return true;
             case R.id.nav_saved_recipes:
+
                 Intent savedRecipesIntent = new Intent(this, SavedRecipeActivity.class);
                 startActivity(savedRecipesIntent);
+
                 return true;
             case R.id.nav_grocery_list:
                 return true;
