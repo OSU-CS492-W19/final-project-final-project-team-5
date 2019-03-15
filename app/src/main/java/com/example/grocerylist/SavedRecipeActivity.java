@@ -1,7 +1,10 @@
 package com.example.grocerylist;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,7 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.grocerylist.data.Recipe.RecipeData;
 import com.example.grocerylist.utils.RecipeUtils;
+
+import java.util.List;
 
 public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdapter.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,6 +45,15 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
 
         mRecipieAdapter = new RecipeAdapter(this);
         mRecipieistRV.setAdapter(mRecipieAdapter);
+
+        RecipeViewModel viewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
+        viewModel.getAllRecipes().observe(this, new Observer<List<RecipeData>>() {
+            @Override
+            public void onChanged(@Nullable List<RecipeData> recipeData) {
+                //mRecipieAdapter.updateItems(recipeData); //TODO: figure out how to use RecipeData, RecipeInfox, etc.
+            }
+        });
+
 
         mRecipieistRV.setItemAnimator(new DefaultItemAnimator());
 
@@ -81,10 +96,14 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
                 startActivity(searchRecipesIntent);
                 return true;
             case R.id.nav_saved_recipes:
+
                 Intent savedRecipesIntent = new Intent(this, SavedRecipeActivity.class);
                 startActivity(savedRecipesIntent);
+
                 return true;
             case R.id.nav_grocery_list:
+                Intent mainActivityIntent = new Intent(this, MainActivity.class);
+                startActivity(mainActivityIntent);
                 return true;
         }
         return false;
@@ -103,7 +122,9 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
 
     @Override
     public void onItemClicked(RecipeUtils.RecipeInfo recipeInfo) {
-     ////Open RecipeDetail Activity Via Intent
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        intent.putExtra(RecipeUtils.EXTRA_RECIPE, recipeInfo);
+        startActivity(intent);
     }
 }
 

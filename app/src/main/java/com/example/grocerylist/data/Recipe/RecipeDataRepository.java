@@ -27,7 +27,7 @@ public class RecipeDataRepository {
         return mRecipieDao.getRecipes();
     }
 
-    public LiveData<RecipeData> getRecipeByName(String recipie_id) {
+    public LiveData<RecipeData> getRecipeById(String recipie_id) {
         Log.e("newFlag", recipie_id);
         LiveData<RecipeData> dat = mRecipieDao.getRecipe(recipie_id);
         if (dat.getValue() == null) {

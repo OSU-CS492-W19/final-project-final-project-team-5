@@ -29,7 +29,7 @@ public class RecipeViewModel extends AndroidViewModel {
         return mRecipeRepository.getAllRecipes();
     }
 
-    public LiveData<RecipeData> getRecipeByName(String name){
-        return mRecipeRepository.getRecipeByName(name);
+    public LiveData<RecipeData> getRecipeById(String name){
+        return mRecipeRepository.getRecipeById(name);
     }
 }
