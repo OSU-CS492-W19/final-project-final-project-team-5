@@ -40,7 +40,7 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
     @Override
     public SearchResultViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.search_recipe_item, parent, false);
+        View view = inflater.inflate(R.layout.saved_recipe_item, parent, false);
         return new SearchResultViewHolder(view);
     }
 
