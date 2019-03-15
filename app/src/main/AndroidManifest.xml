@@ -22,8 +22,9 @@
             android:name=".RecipeDetailActivity"
             android:label="@string/nav_saved_recipes" />
         <activity
-            android:name=".SavedRecipesActivity"
-            android:label="@string/nav_saved_recipes"/>
+            android:name=".SavedRecipeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/nav_saved_recipes" />
         <activity
             android:name=".recipeSearchActivity"
             android:parentActivityName=".MainActivity">

@@ -1,7 +1,9 @@
 package com.example.grocerylist;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -28,9 +30,9 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.saved_recipes_activity);
 
-        mRecipieistRV = findViewById(R.id.rv_grocery_list);//TODO: Update with corect
+        mRecipieistRV = findViewById(R.id.rv_saved_recipes_list);//TODO: Update with corect
 
         mRecipieistRV.setLayoutManager(new LinearLayoutManager(this));
         mRecipieistRV.setHasFixedSize(true);
@@ -75,13 +77,28 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
         mDrawerLayout.closeDrawers();
         switch (menuItem.getItemId()) {
             case R.id.nav_search:
+                Intent searchRecipesIntent = new Intent(this, recipeSearchActivity.class);
+                startActivity(searchRecipesIntent);
                 return true;
             case R.id.nav_saved_recipes:
+                Intent savedRecipesIntent = new Intent(this, SavedRecipeActivity.class);
+                startActivity(savedRecipesIntent);
                 return true;
             case R.id.nav_grocery_list:
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

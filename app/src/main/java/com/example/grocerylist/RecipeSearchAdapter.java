@@ -6,24 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.example.grocerylist.data.Recipe;
+import com.example.grocerylist.utils.RecipeUtils;
 
 import java.util.List;
 
 public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapter.SearchResultViewHolder> {
-    private List<Recipe> mRecipes;
+    private List<RecipeUtils.RecipeInfo> mRecipes;
     OnSearchItemClickListener mSearchRecipeClickListener;
 
     public interface OnSearchItemClickListener{
-        void onSearchItemClick(Recipe recipe);
+        void onSearchItemClick(RecipeUtils.RecipeInfo recipe);
     }
 
     RecipeSearchAdapter(OnSearchItemClickListener searchItemClickListener){
         mSearchRecipeClickListener = searchItemClickListener;
     }
 
-    public void updateSearchResults(List<Recipe> recipes){
+    public void updateSearchResults(List<RecipeUtils.RecipeInfo> recipes){
         mRecipes = recipes;
         notifyDataSetChanged();
     }
@@ -55,19 +54,19 @@ public class RecipeSearchAdapter extends RecyclerView.Adapter<RecipeSearchAdapte
 
         public SearchResultViewHolder(View itemView){
             super(itemView);
-            mSearchResultTV = itemView.findViewById(R.id.tv_recipe_result_item);
+            mSearchResultTV = itemView.findViewById(R.id.tv_recipe_title);
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Recipe searchResult = mRecipes.get(getAdapterPosition());
+                    RecipeUtils.RecipeInfo searchResult = mRecipes.get(getAdapterPosition());
                     mSearchRecipeClickListener.onSearchItemClick(searchResult);
                 }
             });
         }
 
-        public void bind(Recipe recipe){
-            mSearchResultTV.setText(recipe.recipe_name);
+        public void bind(RecipeUtils.RecipeInfo recipe){
+            mSearchResultTV.setText(recipe.recipeInfox.Title);
         }
     }
 }

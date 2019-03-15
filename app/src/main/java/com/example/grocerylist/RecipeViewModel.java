@@ -4,32 +4,32 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
-import com.example.grocerylist.data.Recipe;
-import com.example.grocerylist.data.RecipeRepository;
+import com.example.grocerylist.data.Recipe.RecipeData;
+import com.example.grocerylist.data.Recipe.RecipeDataRepository;
 
 import java.util.List;
 
 public class RecipeViewModel extends AndroidViewModel {
-    private RecipeRepository mRecipeRepository;
+    private RecipeDataRepository mRecipeRepository;
 
     public RecipeViewModel(Application application){
         super(application);
-        mRecipeRepository = new RecipeRepository(application);
+        mRecipeRepository = new RecipeDataRepository(application);
     }
 
-    public void insertRecipe(Recipe recipe){
-        mRecipeRepository.insertRecipe(recipe);
+    public void insertRecipe(RecipeData recipe){
+        mRecipeRepository.insertRecipeData(recipe);
     }
 
-    public void deleteRecipe(Recipe recipe){
-        mRecipeRepository.deleteRecipe(recipe);
+    public void deleteRecipe(RecipeData recipe){
+        mRecipeRepository.deleteRecipeData(recipe);
     }
 
-    public LiveData<List<Recipe>> getAllRecipes(){
+    public LiveData<List<RecipeData>> getAllRecipes(){
         return mRecipeRepository.getAllRecipes();
     }
 
-    public LiveData<Recipe> getRecipeByName(String name){
+    public LiveData<RecipeData> getRecipeByName(String name){
         return mRecipeRepository.getRecipeByName(name);
     }
 }

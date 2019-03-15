@@ -15,21 +15,21 @@ public class RecipeDataRepository {
         mRecipieDao = db.locationDao();
     }
 
-    public void insertLocationData(RecipeData repo) {
+    public void insertRecipeData(RecipeData repo) {
         new InsertAsyncTask(mRecipieDao).execute(repo);
     }
 
-    public void deleteLocationData(RecipeData repo) {
+    public void deleteRecipeData(RecipeData repo) {
         new DeleteAsyncTask(mRecipieDao).execute(repo);
     }
 
-    public LiveData<List<RecipeData>> getAllRecipies() {
-        return mRecipieDao.getRecipies();
+    public LiveData<List<RecipeData>> getAllRecipes() {
+        return mRecipieDao.getRecipes();
     }
 
-    public LiveData<RecipeData> getRecipieByName(String recipie_id) {
+    public LiveData<RecipeData> getRecipeByName(String recipie_id) {
         Log.e("newFlag", recipie_id);
-        LiveData<RecipeData> dat = mRecipieDao.getRecipie(recipie_id);
+        LiveData<RecipeData> dat = mRecipieDao.getRecipe(recipie_id);
         if (dat.getValue() == null) {
             Log.e("get1", "null");
         }
