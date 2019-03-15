@@ -19,6 +19,15 @@
             </intent-filter>
         </activity>
         <activity
+
+            android:name=".RecipeDetailActivity"
+            android:label="@string/nav_saved_recipes" />
+        <activity
+            android:name=".SavedRecipeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/nav_saved_recipes" />
+        <activity
+
             android:name=".recipeSearchActivity"
             android:parentActivityName=".MainActivity">
             <meta-data

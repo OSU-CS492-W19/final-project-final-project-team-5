@@ -15,11 +15,11 @@ public class ItemDataRepository {
         mItemDao = db.locationDao();
     }
 
-    public void insertLocationData(ItemData repo) {
+    public void insertItemData(ItemData repo) {
         new InsertAsyncTask(mItemDao).execute(repo);
     }
 
-    public void deleteLocationData(ItemData repo) {
+    public void deleteItemData(ItemData repo) {
         new DeleteAsyncTask(mItemDao).execute(repo);
     }
 

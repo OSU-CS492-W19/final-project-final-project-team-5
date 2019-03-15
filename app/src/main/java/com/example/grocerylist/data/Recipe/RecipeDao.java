@@ -18,8 +18,8 @@ public interface RecipeDao {
     void delete(RecipeData recipeData);
 
     @Query("SELECT * FROM recipes")
-    LiveData<List<RecipeData>> getRecipies();
+    LiveData<List<RecipeData>> getRecipes();
 
     @Query("SELECT * FROM recipes WHERE recipie_id = :recipie LIMIT 1")
-    LiveData<RecipeData> getRecipie(String recipie);
+    LiveData<RecipeData> getRecipe(String recipie);
 }

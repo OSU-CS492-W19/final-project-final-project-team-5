@@ -122,6 +122,10 @@ public class MainActivity extends AppCompatActivity implements GroceryAdapter.On
                 startActivity(searchRecipesIntent);
                 return true;
             case R.id.nav_saved_recipes:
+
+                Intent savedRecipesIntent = new Intent(this, SavedRecipeActivity.class);
+                startActivity(savedRecipesIntent);
+
                 return true;
             case R.id.nav_grocery_list:
                 return true;
