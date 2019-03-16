@@ -9,29 +9,45 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import com.example.grocerylist.data.Item.ItemData;
 
 public class GroceryAdapter extends RecyclerView.Adapter<GroceryAdapter.GroceryViewHolder> {
-    private ArrayList<String> mGroceryList;
+    //private ArrayList<String> mGroceryList;
+    private List<ItemData> mGroceryItems;
     private OnItemCheckedChangeListener mCheckedChangeListener;
 
     public interface OnItemCheckedChangeListener{
-        void onItemCheckedChanged(String item, boolean b);
+        void onItemCheckedChanged(ItemData item, boolean b);
     }
 
-    public GroceryAdapter(OnItemCheckedChangeListener checkedChangeListener){
-        mGroceryList = new ArrayList<>();
+    GroceryAdapter(OnItemCheckedChangeListener checkedChangeListener){
         mCheckedChangeListener = checkedChangeListener;
     }
 
-    public void addItem(String item){
+   /* public void addItem(String item){
         mGroceryList.add(item);
         notifyItemInserted(0);
+    }*/
+
+    public void updateGroceryList(List<ItemData> items) {
+        mGroceryItems = items;
+        notifyDataSetChanged();
     }
 
-    @Override
+ /*   @Override
     public int getItemCount(){
         return mGroceryList.size();
+    }*/
+
+    @Override
+    public int getItemCount() {
+        if (mGroceryItems != null) {
+            return mGroceryItems.size();
+        } else {
+            return 0;
+        }
     }
 
     @NonNull
@@ -42,15 +58,24 @@ public class GroceryAdapter extends RecyclerView.Adapter<GroceryAdapter.GroceryV
         return new GroceryViewHolder(itemView);
     }
 
-    @Override
+    public ItemData getItemAtPosition(int position){
+        return mGroceryItems.get(position);
+    }
+
+ /*   @Override
     public void onBindViewHolder(@NonNull GroceryViewHolder groceryViewHolder, int i) {
         String item = mGroceryList.get(adapterPositionToArrayIndex(i));
         groceryViewHolder.bind(item);
+    }*/
+
+    @Override
+    public void onBindViewHolder(@NonNull GroceryViewHolder holder, int position) {
+        holder.bind(mGroceryItems.get(position));
     }
 
-    public int adapterPositionToArrayIndex(int i){
+ /*   public int adapterPositionToArrayIndex(int i){
         return mGroceryList.size() - i -1;
-    }
+    }*/
 
     class GroceryViewHolder extends RecyclerView.ViewHolder{
         private TextView mItemTV;
@@ -63,22 +88,22 @@ public class GroceryAdapter extends RecyclerView.Adapter<GroceryAdapter.GroceryV
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean b) {
-                    String item = mGroceryList.get(adapterPositionToArrayIndex(getAdapterPosition()));
+                    ItemData item = mGroceryItems.get(getAdapterPosition());
                     mCheckedChangeListener.onItemCheckedChanged(item, b);
                 }
             });
         }
 
-        public void bind(String item){
-            mItemTV.setText(item);
+        public void bind(ItemData item){
+            mItemTV.setText(item.item);
         }
 
-        public void removeFromList(){
+    /*    public void removeFromList(){
             int position = getAdapterPosition();
             mGroceryList.remove(adapterPositionToArrayIndex(position));
             notifyItemRemoved(position);
 
-        }
+        }*/
     }
 }
 

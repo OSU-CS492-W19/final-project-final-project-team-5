@@ -1,6 +1,10 @@
 package com.example.grocerylist;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.ClipData;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,6 +26,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.grocerylist.data.Item.ItemData;
+
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements GroceryAdapter.OnItemCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView mGroceryListRV;
@@ -29,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements GroceryAdapter.On
     private GroceryAdapter mGroceryAdapter;
     private Toast mToast;
     private DrawerLayout mDrawerLayout;
+    private ItemViewModel mItemViewModel;
 
 
     @Override
@@ -59,16 +68,28 @@ public class MainActivity extends AppCompatActivity implements GroceryAdapter.On
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
+        mItemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
+
+        mItemViewModel.getAllItems().observe(this, new Observer<List<ItemData>>() {
+            @Override
+            public void onChanged(@Nullable List<ItemData> itemData) {
+                mGroceryAdapter.updateGroceryList(itemData);
+            }
+        });
+
         mToast = null;
 
         Button addTodoButton = findViewById(R.id.btn_add_item);
         addTodoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String todoText = mGroceryEntryET.getText().toString();
-                if (!TextUtils.isEmpty(todoText)) {
+                String groceryText = mGroceryEntryET.getText().toString();
+                if (!TextUtils.isEmpty(groceryText)) {
                     mGroceryListRV.scrollToPosition(0);
-                    mGroceryAdapter.addItem(todoText);
+                 //   mGroceryAdapter.addItem(groceryText);
+                    ItemData newItem = new ItemData();
+                    newItem.item = groceryText;
+                    mItemViewModel.insertItemData(newItem);
                     mGroceryEntryET.setText("");
                 }
             }
@@ -82,7 +103,9 @@ public class MainActivity extends AppCompatActivity implements GroceryAdapter.On
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                ((GroceryAdapter.GroceryViewHolder)viewHolder).removeFromList();
+                int position = ((GroceryAdapter.GroceryViewHolder)viewHolder).getAdapterPosition();
+                ItemData item = mGroceryAdapter.getItemAtPosition(position);
+                mItemViewModel.deleteItemData(item);
 
             }
         };
@@ -103,12 +126,12 @@ public class MainActivity extends AppCompatActivity implements GroceryAdapter.On
     }
 
     @Override
-    public void onItemCheckedChanged(String item, boolean b){
+    public void onItemCheckedChanged(ItemData item, boolean b){
         if (mToast != null){
             mToast.cancel();
         }
         String completedState = b ? "PURCHASED" : "MARKED NOT PURCHASED";
-        String toastText = completedState + ": " + item;
+        String toastText = completedState + ": " + item.item;
         mToast = Toast.makeText(this, toastText, Toast.LENGTH_LONG);
         mToast.show();
     }
