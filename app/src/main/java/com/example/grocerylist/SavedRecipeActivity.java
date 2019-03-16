@@ -103,7 +103,8 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
 
     @Override
     public void onItemClicked(RecipeUtils.RecipeInfo recipeInfo) {
-     ////Open RecipeDetail Activity Via Intent
+        Intent RecipeDetailIntent = new Intent(this, RecipeDetailActivity.class);
+        startActivity(RecipeDetailIntent);
     }
 }
 
