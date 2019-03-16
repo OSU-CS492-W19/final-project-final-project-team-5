@@ -11,8 +11,8 @@ public class ItemDataRepository {
     private ItemDao mItemDao;
 
     public ItemDataRepository(Application application) {
-        AppDatabase db = AppDatabase.getDatabase(application);
-        mItemDao = db.locationDao();
+        ItemDatabase db = ItemDatabase.getDatabase(application);
+        mItemDao = db.ItemDao();
     }
 
     public void insertItemData(ItemData repo) {

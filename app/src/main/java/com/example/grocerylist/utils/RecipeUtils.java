@@ -151,13 +151,13 @@ public class RecipeUtils {
         }
     }
 
-    public static RecipeData makeRecipieData(RecipeInfox recipieInfox, RecipeResult recipeResult) {
+    public static RecipeData makeRecipieData(RecipeInfox recipeInfox, RecipeResult recipeResult) {
         RecipeData recipeData = new RecipeData();
-        recipeData.recipie_id = recipieInfox.RecipeID;
+        recipeData.recipe_id = recipeInfox.RecipeID;
 
         Gson gson = new Gson();
-        recipeData.recipe_infox_json = gson.toJson(recipieInfox);
-        recipeData.recipie_result_json = gson.toJson(recipeResult);
+        recipeData.recipe_infox_json = gson.toJson(recipeInfox);
+        recipeData.recipe_result_json = gson.toJson(recipeResult);
 
         return recipeData;
     }
