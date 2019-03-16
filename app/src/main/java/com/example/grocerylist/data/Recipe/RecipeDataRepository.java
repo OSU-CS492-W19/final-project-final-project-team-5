@@ -60,8 +60,8 @@ public class RecipeDataRepository {
         }
 
         @Override
-        protected Void doInBackground(RecipeData... recipieData) {
-            mAsyncTaskDao.delete(recipieData[0]);
+        protected Void doInBackground(RecipeData... recipeData) {
+            mAsyncTaskDao.delete(recipeData[0]);
             return null;
         }
     }

@@ -21,6 +21,8 @@ public class RecipeUtils {
     private final static String RECIPE_QUERY_PARAM = "Title_kw";
     private final static String RECIPE_APPID_PARAM = "api_key";
 
+    public static final String EXTRA_RECIPE = "RecipeUtils.RecipeInfox";
+
     /*
      * Set your own APPID here.
      */

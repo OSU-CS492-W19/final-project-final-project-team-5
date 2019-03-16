@@ -3,4 +3,5 @@
     <string name="nav_search">Search Recipes</string>
     <string name="nav_saved_recipes">Saved Recipes</string>
     <string name="nav_grocery_list">Grocery List</string>
+    <string name="nav_recipe_detail">Recipe</string>
 </resources>
