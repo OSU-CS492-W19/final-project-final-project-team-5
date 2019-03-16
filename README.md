@@ -20,9 +20,11 @@ Members:
   The user can save recipes and those will be added to the SQL Database as well as the grocery items.
   
   
-  The three acitivites will be:
+  The four acitivites will be:
   
     grocery list
+    
+    recipe search activity
     
     view recipe
     
