@@ -22,8 +22,8 @@ import com.example.grocerylist.utils.RecipeUtils;
 
 public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdapter.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    private RecyclerView mRecipieistRV;
-    private RecipeAdapter mRecipieAdapter;
+    private RecyclerView mRecipeListRV;
+    private RecipeAdapter mRecipeAdapter;
     private DrawerLayout mDrawerLayout;
 
 
@@ -32,15 +32,15 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.saved_recipes_activity);
 
-        mRecipieistRV = findViewById(R.id.rv_saved_recipes_list);//TODO: Update with corect
+        mRecipeListRV = findViewById(R.id.rv_saved_recipes_list);//TODO: Update with corect
 
-        mRecipieistRV.setLayoutManager(new LinearLayoutManager(this));
-        mRecipieistRV.setHasFixedSize(true);
+        mRecipeListRV.setLayoutManager(new LinearLayoutManager(this));
+        mRecipeListRV.setHasFixedSize(true);
 
-        mRecipieAdapter = new RecipeAdapter(this);
-        mRecipieistRV.setAdapter(mRecipieAdapter);
+        mRecipeAdapter = new RecipeAdapter(this);
+        mRecipeListRV.setAdapter(mRecipeAdapter);
 
-        mRecipieistRV.setItemAnimator(new DefaultItemAnimator());
+        mRecipeListRV.setItemAnimator(new DefaultItemAnimator());
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
@@ -62,13 +62,13 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                ((RecipeAdapter.RecipieViewHolder) viewHolder).removeFromList();
+                ((RecipeAdapter.RecipeViewHolder) viewHolder).removeFromList();
 
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(mRecipieistRV);
+        itemTouchHelper.attachToRecyclerView(mRecipeListRV);
     }
 
 
