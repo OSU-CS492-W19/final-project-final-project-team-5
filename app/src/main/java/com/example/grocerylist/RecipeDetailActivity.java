@@ -22,11 +22,13 @@ public class RecipeDetailActivity extends AppCompatActivity{
     private TextView mRecipeNameTV;
     private TextView mRecipeInstructionsTV;
     private ListView mRecipeIngredients;
+
     private ImageView mAddIngredientsToListIV;
+    private ImageView mSaveRecipeIV;
+
     private String mRecipeId;
     private String mRecipeInfoxJson;
     private String mRecipeResultJson;
-    private ImageView mSaveRecipeIV;
     private RecipeUtils.RecipeResult mRecipeResult;
     private RecipeAdapter mAdapter;
 
@@ -42,8 +44,10 @@ public class RecipeDetailActivity extends AppCompatActivity{
         mRecipeNameTV = findViewById(R.id.tv_recipe_name);
         mRecipeIngredients = findViewById(R.id.lv_ingredients);
         mRecipeInstructionsTV = findViewById(R.id.tv_instructions);
+
         mAddIngredientsToListIV = findViewById(R.id.iv_add_items_to_list);
         mSaveRecipeIV = findViewById(R.id.iv_save_recipe);
+
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
 
         mRecipe = null;

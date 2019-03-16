@@ -34,6 +34,7 @@ import com.example.grocerylist.utils.RecipeUtils;
 import com.example.grocerylist.data.recipeSearchResult;
 import com.example.grocerylist.data.Status;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class recipeSearchActivity extends AppCompatActivity implements recipeSearchResultsAdapter.OnResultItemClickListener{
@@ -111,6 +112,7 @@ public class recipeSearchActivity extends AppCompatActivity implements recipeSea
     @Override
     public void onResultItemClick(recipeSearchResult result) {
         Intent intent = new Intent(this, RecipeDetailActivity.class);
+        //intent.putExtra(RecipeUtils.EXTRA_RECIPE, (Serializable) result);
         startActivity(intent);
 
     }
