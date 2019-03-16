@@ -14,8 +14,8 @@ import com.example.grocerylist.utils.RecipeUtils;
 
 import java.util.ArrayList;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipieViewHolder> {
-    private ArrayList<RecipeUtils.RecipeInfo> mRecipieList;
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
+    private ArrayList<RecipeUtils.RecipeInfo> mRecipeList;
     private OnItemClickListener mItemClickListener;
 
     public interface OnItemClickListener{
@@ -23,39 +23,39 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipieVie
     }
 
     public RecipeAdapter(OnItemClickListener itemClickListener){
-        mRecipieList = new ArrayList<RecipeUtils.RecipeInfo>();
+        mRecipeList = new ArrayList<RecipeUtils.RecipeInfo>();
         mItemClickListener = itemClickListener;
     }
 
     public void updateItems(ArrayList<RecipeUtils.RecipeInfo> items) {
-        mRecipieList = items;
+        mRecipeList = items;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount(){
-        return mRecipieList.size();
+        return mRecipeList.size();
     }
 
     @NonNull
     @Override
-    public RecipieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.saved_recipe_item, viewGroup, false);////TODO : Use Same xml as the search activity
-        return new RecipieViewHolder(itemView);
+        return new RecipeViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecipieViewHolder recipieViewHolder, int i) {
-        RecipeUtils.RecipeInfo item = mRecipieList.get(adapterPositionToArrayIndex(i));
-        recipieViewHolder.bind(item);
+    public void onBindViewHolder(@NonNull RecipeViewHolder RecipeViewHolder, int i) {
+        RecipeUtils.RecipeInfo item = mRecipeList.get(adapterPositionToArrayIndex(i));
+        RecipeViewHolder.bind(item);
     }
 
     public int adapterPositionToArrayIndex(int i){
-        return mRecipieList.size() - i -1;
+        return mRecipeList.size() - i -1;
     }
 
-    class RecipieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView mTitle;
         private TextView mCategory;
         private TextView mCuisine; //sometimes there
@@ -65,7 +65,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipieVie
         private TextView mStarRating;
         private TextView mSubcategory;
 
-        public RecipieViewHolder(final View itemView){
+        public RecipeViewHolder(final View itemView){
             super(itemView);
             mTitle = itemView.findViewById(R.id.tv_recipe_title);
             mCategory = itemView.findViewById(R.id.tv_recipe_category);;
@@ -94,14 +94,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipieVie
 
         public void removeFromList(){
             int position = getAdapterPosition();
-            mRecipieList.remove(adapterPositionToArrayIndex(position));
+            mRecipeList.remove(adapterPositionToArrayIndex(position));
             notifyItemRemoved(position);
 
         }
 
         @Override
         public void onClick(View v) {
-            RecipeUtils.RecipeInfo recipeInfo = mRecipieList.get(getAdapterPosition());
+            RecipeUtils.RecipeInfo recipeInfo = mRecipeList.get(getAdapterPosition());
             mItemClickListener.onItemClicked(recipeInfo);
         }
     }
