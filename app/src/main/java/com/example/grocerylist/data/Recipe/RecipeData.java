@@ -11,10 +11,10 @@ import java.io.Serializable;
 public  class RecipeData implements  Serializable{
     @NonNull
     @PrimaryKey
-    public String recipie_id;
+    public String recipe_id;
 
     public String recipe_infox_json;
-    public String recipie_result_json;
+    public String recipe_result_json;
 }
 
 

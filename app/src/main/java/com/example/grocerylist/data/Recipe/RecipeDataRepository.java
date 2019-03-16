@@ -8,33 +8,33 @@ import android.util.Log;
 import java.util.List;
 
 public class RecipeDataRepository {
-    private RecipeDao mRecipieDao;
+    private RecipeDao mRecipeDao;
 
     public RecipeDataRepository(Application application) {
-        AppDatabase db = AppDatabase.getDatabase(application);
-        mRecipieDao = db.locationDao();
+        RecipeDatabase db = RecipeDatabase.getDatabase(application);
+        mRecipeDao = db.RecipeDao();
     }
 
     public void insertRecipeData(RecipeData repo) {
-        new InsertAsyncTask(mRecipieDao).execute(repo);
+        new InsertAsyncTask(mRecipeDao).execute(repo);
     }
 
     public void deleteRecipeData(RecipeData repo) {
-        new DeleteAsyncTask(mRecipieDao).execute(repo);
+        new DeleteAsyncTask(mRecipeDao).execute(repo);
     }
 
     public LiveData<List<RecipeData>> getAllRecipes() {
-        return mRecipieDao.getRecipes();
+        return mRecipeDao.getRecipes();
     }
 
-    public LiveData<RecipeData> getRecipeByName(String recipie_id) {
-        Log.e("newFlag", recipie_id);
-        LiveData<RecipeData> dat = mRecipieDao.getRecipe(recipie_id);
+    public LiveData<RecipeData> getRecipeByName(String recipe_id) {
+        Log.e("newFlag", recipe_id);
+        LiveData<RecipeData> dat = mRecipeDao.getRecipe(recipe_id);
         if (dat.getValue() == null) {
             Log.e("get1", "null");
         }
         else {
-            Log.e("get1", dat.getValue().recipie_id);
+            Log.e("get1", dat.getValue().recipe_id);
         }
         return dat;
     }
@@ -46,9 +46,9 @@ public class RecipeDataRepository {
         }
 
         @Override
-        protected Void doInBackground(RecipeData... recipieData) {
-            Log.e("flagb", recipieData[0].recipie_id);
-            mAsyncTaskDao.insert(recipieData[0]);
+        protected Void doInBackground(RecipeData... recipeData) {
+            Log.e("flagb", recipeData[0].recipe_id);
+            mAsyncTaskDao.insert(recipeData[0]);
             return null;
         }
     }

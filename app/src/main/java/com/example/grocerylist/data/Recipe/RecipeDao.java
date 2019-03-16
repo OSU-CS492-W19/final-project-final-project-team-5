@@ -20,6 +20,6 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipes")
     LiveData<List<RecipeData>> getRecipes();
 
-    @Query("SELECT * FROM recipes WHERE recipie_id = :recipie LIMIT 1")
-    LiveData<RecipeData> getRecipe(String recipie);
+    @Query("SELECT * FROM recipes WHERE recipe_id = :recipe LIMIT 1")
+    LiveData<RecipeData> getRecipe(String recipe);
 }
