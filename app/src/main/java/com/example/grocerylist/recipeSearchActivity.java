@@ -110,9 +110,7 @@ public class recipeSearchActivity extends AppCompatActivity implements recipeSea
 
     @Override
     public void onResultItemClick(recipeSearchResult result) {
-    /*    Intent intent = new Intent(this, ForecastItemDetailActivity.class);
-        intent.putExtra(OpenWeatherMapUtils.EXTRA_FORECAST_ITEM, forecastItem);
-        startActivity(intent);*/
-
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        startActivity(intent);
     }
 }

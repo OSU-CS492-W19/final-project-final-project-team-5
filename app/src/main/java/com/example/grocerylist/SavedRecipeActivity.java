@@ -21,7 +21,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.grocerylist.data.Recipe.RecipeDao;
 import com.example.grocerylist.data.Recipe.RecipeData;
+import com.example.grocerylist.data.Recipe.RecipeDataRepository;
 import com.example.grocerylist.utils.RecipeUtils;
 
 import java.util.List;
@@ -45,12 +47,16 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
 
         mRecipieAdapter = new RecipeAdapter(this);
         mRecipieistRV.setAdapter(mRecipieAdapter);
+        mRecipieistRV.setLayoutManager(new LinearLayoutManager(this));
+        mRecipieistRV.setHasFixedSize(true);
 
         RecipeViewModel viewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
+
+
         viewModel.getAllRecipes().observe(this, new Observer<List<RecipeData>>() {
             @Override
             public void onChanged(@Nullable List<RecipeData> recipeData) {
-                //mRecipieAdapter.updateItems(recipeData); //TODO: figure out how to use RecipeData, RecipeInfox, etc.
+                //mRecipieAdapter.updateItems(recipeData); //TODO: figure out which class the adapter is using: RecipeData, RecipeInfox, etc.
             }
         });
 
@@ -123,7 +129,7 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
     @Override
     public void onItemClicked(RecipeUtils.RecipeInfo recipeInfo) {
         Intent intent = new Intent(this, RecipeDetailActivity.class);
-        intent.putExtra(RecipeUtils.EXTRA_RECIPE, recipeInfo);
+        //intent.putExtra(RecipeUtils.EXTRA_RECIPE, recipeInfo);
         startActivity(intent);
     }
 }

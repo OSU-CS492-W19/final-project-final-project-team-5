@@ -4,9 +4,11 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -15,7 +17,10 @@ import android.widget.TextView;
 import com.example.grocerylist.data.Recipe.RecipeData;
 import com.example.grocerylist.utils.RecipeUtils;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity{
+
+    private static final String TAG = RecipeDetailActivity.class.getSimpleName();
+
     private TextView mRecipeNameTV;
     private TextView mRecipeInstructionsTV;
     private ListView mRecipeIngredients;
@@ -25,6 +30,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private String mRecipeResultJson;
     private ImageView mSaveRecipeIV;
     private RecipeUtils.RecipeResult mRecipeResult;
+    private RecipeAdapter mAdapter;
 
     private RecipeViewModel mRecipeViewModel;
     private RecipeData mRecipe;
@@ -41,16 +47,21 @@ public class RecipeDetailActivity extends AppCompatActivity {
         mAddIngredientsToListIV = findViewById(R.id.iv_add_ingredients_to_list);
         mSaveRecipeIV = findViewById(R.id.iv_save_recipe);
 
+
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
 
         mRecipe = null;
         Intent intent = getIntent();
         if(intent != null && intent.hasExtra(RecipeUtils.EXTRA_RECIPE)){
+            Log.d(TAG, "Intent is not null.");
             mRecipe = (RecipeData) intent.getSerializableExtra(RecipeUtils.EXTRA_RECIPE);
             mRecipeId = mRecipe.recipie_id;
             mRecipeInfoxJson = mRecipe.recipe_infox_json;
             mRecipeResultJson = mRecipe.recipie_result_json;
+
             mRecipeResult = RecipeUtils.parseRecipeJson(mRecipeResultJson);
+            mRecipeInstructionsTV.setText(mRecipeResult.Instructions);
+            //TODO: parse RecipeData, RecipeInfo, RecipeInfox, Ingredients, etc.
 
             mRecipeViewModel.getRecipeById(mRecipe.recipie_id).observe(this, new Observer<RecipeData>() {
                 @Override
@@ -78,6 +89,5 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }
