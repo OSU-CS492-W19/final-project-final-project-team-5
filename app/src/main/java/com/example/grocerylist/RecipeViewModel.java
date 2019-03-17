@@ -32,4 +32,8 @@ public class RecipeViewModel extends AndroidViewModel {
     public LiveData<RecipeData> getRecipeByName(String name){
         return mRecipeRepository.getRecipeByName(name);
     }
+
+    public void loadRecipe(String id){
+        mRecipeRepository.loadRecipeSearch(id);
+    }
 }

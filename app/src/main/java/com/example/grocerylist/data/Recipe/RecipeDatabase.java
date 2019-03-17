@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {RecipeData.class}, version = 1)
+@Database(entities = {RecipeData.class}, version = 2)
 public abstract class RecipeDatabase extends RoomDatabase {
     private static volatile RecipeDatabase INSTANCE;
 
@@ -14,7 +14,9 @@ public abstract class RecipeDatabase extends RoomDatabase {
             synchronized (RecipeDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            RecipeDatabase.class, "recipe_db").build();
+                            RecipeDatabase.class, "recipe_db")
+                            .fallbackToDestructiveMigration()
+                            .build();
                 }
             }
         }
