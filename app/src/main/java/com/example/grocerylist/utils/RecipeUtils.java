@@ -147,21 +147,19 @@ public class RecipeUtils {
     public static RecipeResult parseRecipeJson(String json) {
         Gson gson = new Gson();
         RecipeResult result = gson.fromJson(json, RecipeResult.class);
-        if (result != null) {
+        if (result != null && result != null) {
             return result;
         } else {
             return null;
         }
     }
 
-  //  public static RecipeData makeRecipeData(RecipeInfox recipeInfox, RecipeResult recipeResult) {
-  public static RecipeData makeRecipeData(RecipeResult recipeResult) {
+    public static RecipeData makeRecipieData(RecipeInfox recipeInfox, RecipeResult recipeResult) {
         RecipeData recipeData = new RecipeData();
-      //  recipeData.recipe_id = recipeInfox.RecipeID;
-        recipeData.recipe_id = recipeResult.RecipeID;
+        recipeData.recipe_id = recipeInfox.RecipeID;
 
         Gson gson = new Gson();
-    //    recipeData.recipe_infox_json = gson.toJson(recipeInfox);
+        recipeData.recipe_infox_json = gson.toJson(recipeInfox);
         recipeData.recipe_result_json = gson.toJson(recipeResult);
 
         return recipeData;

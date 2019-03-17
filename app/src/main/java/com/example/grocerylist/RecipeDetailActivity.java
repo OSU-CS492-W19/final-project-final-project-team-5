@@ -69,9 +69,10 @@ public class RecipeDetailActivity extends AppCompatActivity{
         if(intent != null && intent.hasExtra(RecipeUtils.EXTRA_RECIPE_SEARCH_RESULT)){
             Log.d(TAG, "Intent is not null.");
             mRecipeSearchResult = (recipeSearchResult) intent.getSerializableExtra(RecipeUtils.EXTRA_RECIPE_SEARCH_RESULT);
-        //    String recipeURL = buildRecipeURL(mRecipeSearchResult.RecipeID);
+            String recipeURL = buildRecipeURL(mRecipeSearchResult.RecipeID);
             Log.d(TAG, "Recipe Title: " + mRecipeSearchResult.Title);
             mRecipeNameTV.setText(mRecipeSearchResult.Title);
+
 
             //TODO: parse RecipeData, RecipeInfo, RecipeInfox, Ingredients, etc.
 
@@ -80,17 +81,14 @@ public class RecipeDetailActivity extends AppCompatActivity{
                 public void onChanged(@Nullable RecipeData recipeData) {
                     if(recipeData != null){
                         mIsSaved = true;
-                        mRecipeData = (mRecipeViewModel.getRecipeByName(mRecipeSearchResult.RecipeID)).getValue();
                         mSaveRecipeIV.setImageResource(R.drawable.ic_save_transparent);
                     } else {
                         mIsSaved = false;
-                        mRecipeViewModel.loadRecipe(mRecipeSearchResult.RecipeID);
                         mSaveRecipeIV.setImageResource(R.drawable.ic_save_black_24dp);
                     }
                 }
             });
         }
-
 
         mSaveRecipeIV.setOnClickListener(new View.OnClickListener(){
             @Override

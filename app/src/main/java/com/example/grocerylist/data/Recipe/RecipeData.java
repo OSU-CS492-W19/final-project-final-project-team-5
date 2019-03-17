@@ -13,7 +13,7 @@ public  class RecipeData implements  Serializable{
     @PrimaryKey
     public String recipe_id;
 
-   // public String recipe_infox_json;
+    public String recipe_infox_json;
     public String recipe_result_json;
 }
 
