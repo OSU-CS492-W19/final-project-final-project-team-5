@@ -4,4 +4,6 @@
     <string name="nav_saved_recipes">Saved Recipes</string>
     <string name="nav_grocery_list">Grocery List</string>
     <string name="nav_recipe_detail">Recipe</string>
+    <string name="action_share">Share</string>
+    <string name="share_chooser_title">How do you want to share this Grocery List?</string>
 </resources>

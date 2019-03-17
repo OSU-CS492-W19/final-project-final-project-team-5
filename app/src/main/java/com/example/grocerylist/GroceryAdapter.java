@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.grocerylist.data.Item.ItemData;
@@ -26,7 +27,11 @@ public class GroceryAdapter extends RecyclerView.Adapter<GroceryAdapter.GroceryV
         mCheckedChangeListener = checkedChangeListener;
     }
 
-   /* public void addItem(String item){
+    public List<ItemData> getmGroceryItems() {
+        return mGroceryItems;
+    }
+
+    /* public void addItem(String item){
         mGroceryList.add(item);
         notifyItemInserted(0);
     }*/
