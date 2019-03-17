@@ -25,6 +25,7 @@ import android.widget.Button;
 import com.example.grocerylist.data.Recipe.RecipeData;
 import com.example.grocerylist.utils.RecipeUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SavedRecipeActivity extends AppCompatActivity implements RecipeInfoAdapter.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -53,7 +54,11 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeInfo
         viewModel.getAllRecipes().observe(this, new Observer<List<RecipeData>>() {
             @Override
             public void onChanged(@Nullable List<RecipeData> recipeData) {
-                //mRecipeAdapter.updateItems(recipeData); //TODO change adapter
+                ArrayList<RecipeUtils.RecipeInfo> recipeInfoList = new ArrayList<RecipeUtils.RecipeInfo>();
+                for (RecipeData r : recipeData){
+                    recipeInfoList.add(RecipeUtils.recipeDataToInfo(r));
+                }
+                mRecipeAdapter.updateItems(recipeInfoList);
             }
         });
 
