@@ -27,10 +27,10 @@ import com.example.grocerylist.utils.RecipeUtils;
 
 import java.util.List;
 
-public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdapter.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class SavedRecipeActivity extends AppCompatActivity implements RecipeInfoAdapter.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView mRecipeListRV;
-    private RecipeAdapter mRecipeAdapter;
+    private RecipeInfoAdapter mRecipeAdapter;
     private DrawerLayout mDrawerLayout;
 
 
@@ -43,7 +43,7 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
         mRecipeListRV.setLayoutManager(new LinearLayoutManager(this));
         mRecipeListRV.setHasFixedSize(true);
 
-        mRecipeAdapter = new RecipeAdapter(this);
+        mRecipeAdapter = new RecipeInfoAdapter(this);
         mRecipeListRV.setAdapter(mRecipeAdapter);
 
         mRecipeListRV.setItemAnimator(new DefaultItemAnimator());
@@ -79,8 +79,7 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                ((RecipeAdapter.RecipeViewHolder) viewHolder).removeFromList();
-
+                ((RecipeInfoAdapter.RecipeViewHolder) viewHolder).removeFromList();
             }
         };
 
@@ -121,6 +120,7 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeAdap
     @Override
     public void onItemClicked(RecipeUtils.RecipeInfo recipeInfo) {
         Intent RecipeDetailIntent = new Intent(this, RecipeDetailActivity.class);
+        RecipeDetailIntent.putExtra(RecipeUtils.EXTRA_RECIPE_INFO, recipeInfo);
         startActivity(RecipeDetailIntent);
     }
 }

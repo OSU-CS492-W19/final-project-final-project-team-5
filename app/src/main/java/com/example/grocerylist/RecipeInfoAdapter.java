@@ -14,7 +14,7 @@ import com.example.grocerylist.utils.RecipeUtils;
 
 import java.util.ArrayList;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
+public class RecipeInfoAdapter extends RecyclerView.Adapter<RecipeInfoAdapter.RecipeViewHolder> {
     private ArrayList<RecipeUtils.RecipeInfo> mRecipeList;
     private OnItemClickListener mItemClickListener;
 
@@ -22,7 +22,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         void onItemClicked(RecipeUtils.RecipeInfo recipeInfo);
     }
 
-    public RecipeAdapter(OnItemClickListener itemClickListener){
+    public RecipeInfoAdapter(OnItemClickListener itemClickListener){
         mRecipeList = new ArrayList<RecipeUtils.RecipeInfo>();
         mItemClickListener = itemClickListener;
     }

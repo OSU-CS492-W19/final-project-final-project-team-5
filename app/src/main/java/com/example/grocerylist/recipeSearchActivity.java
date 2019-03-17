@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.content.Intent;
@@ -112,7 +113,7 @@ public class recipeSearchActivity extends AppCompatActivity implements recipeSea
     @Override
     public void onResultItemClick(recipeSearchResult result) {
         Intent intent = new Intent(this, RecipeDetailActivity.class);
-        //intent.putExtra(RecipeUtils.EXTRA_RECIPE, (Serializable) result);
+        intent.putExtra(RecipeUtils.EXTRA_RECIPE_SEARCH_RESULT, result);
         startActivity(intent);
 
     }

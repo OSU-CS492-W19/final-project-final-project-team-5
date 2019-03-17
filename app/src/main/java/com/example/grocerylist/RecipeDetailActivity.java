@@ -11,29 +11,38 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.grocerylist.data.Recipe.RecipeData;
+import com.example.grocerylist.data.recipeSearchResult;
 import com.example.grocerylist.utils.RecipeUtils;
+
+import java.io.IOException;
+
+import static com.example.grocerylist.utils.NetworkUtils.doHTTPGet;
+import static com.example.grocerylist.utils.RecipeUtils.buildRecipeURL;
+import static com.example.grocerylist.utils.RecipeUtils.parseRecipeJson;
 
 public class RecipeDetailActivity extends AppCompatActivity{
 
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
 
     private TextView mRecipeNameTV;
+    private TextView mRecipeCuisine;
+    private TextView mRecipeSubcategory;
+    private TextView mRecipeMicrocategory;
+    private TextView mRecipeServings;
+    private TextView mRecipeReviewCount;
+    private TextView mRecipeStarRating;
     private TextView mRecipeInstructionsTV;
     private ListView mRecipeIngredients;
 
     private ImageView mAddIngredientsToListIV;
     private ImageView mSaveRecipeIV;
 
-    private String mRecipeId;
-    private String mRecipeInfoxJson;
-    private String mRecipeResultJson;
-    private RecipeUtils.RecipeResult mRecipeResult;
-    private RecipeAdapter mAdapter;
-
+    private RecipeData mRecipeData;
     private RecipeViewModel mRecipeViewModel;
-    private RecipeData mRecipe;
+    private recipeSearchResult mRecipeSearchResult;
     private boolean mIsSaved = false;
 
     @Override
@@ -41,37 +50,41 @@ public class RecipeDetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
+        mAddIngredientsToListIV = findViewById(R.id.iv_add_items_to_list);
+        mSaveRecipeIV = findViewById(R.id.iv_save_recipe);
+
+        mRecipeNameTV = findViewById(R.id.tv_recipe_title);
+
+
         mRecipeNameTV = findViewById(R.id.tv_recipe_name);
         mRecipeIngredients = findViewById(R.id.lv_ingredients);
         mRecipeInstructionsTV = findViewById(R.id.tv_instructions);
 
-        mAddIngredientsToListIV = findViewById(R.id.iv_add_items_to_list);
-        mSaveRecipeIV = findViewById(R.id.iv_save_recipe);
+
 
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
 
-        mRecipe = null;
+        mRecipeSearchResult = null;
         Intent intent = getIntent();
-        if(intent != null && intent.hasExtra(RecipeUtils.EXTRA_RECIPE)){
+        if(intent != null && intent.hasExtra(RecipeUtils.EXTRA_RECIPE_SEARCH_RESULT)){
             Log.d(TAG, "Intent is not null.");
-            mRecipe = (RecipeData) intent.getSerializableExtra(RecipeUtils.EXTRA_RECIPE);
-            mRecipeId = mRecipe.recipe_id;
-            mRecipeInfoxJson = mRecipe.recipe_infox_json;
-            mRecipeResultJson = mRecipe.recipe_result_json;
+            mRecipeSearchResult = (recipeSearchResult) intent.getSerializableExtra(RecipeUtils.EXTRA_RECIPE_SEARCH_RESULT);
+            String recipeURL = buildRecipeURL(mRecipeSearchResult.RecipeID);
+            Log.d(TAG, "Recipe Title: " + mRecipeSearchResult.Title);
+            mRecipeNameTV.setText(mRecipeSearchResult.Title);
 
-            mRecipeResult = RecipeUtils.parseRecipeJson(mRecipeResultJson);
-            mRecipeInstructionsTV.setText(mRecipeResult.Instructions);
+
             //TODO: parse RecipeData, RecipeInfo, RecipeInfox, Ingredients, etc.
 
-            mRecipeViewModel.getRecipeByName(mRecipe.recipe_id).observe(this, new Observer<RecipeData>() {
+            mRecipeViewModel.getRecipeByName(mRecipeSearchResult.RecipeID).observe(this, new Observer<RecipeData>() {
                 @Override
                 public void onChanged(@Nullable RecipeData recipeData) {
                     if(recipeData != null){
                         mIsSaved = true;
-                        mSaveRecipeIV.setImageResource(R.drawable.ic_save_black_24dp);
+                        mSaveRecipeIV.setImageResource(R.drawable.ic_save_transparent);
                     } else {
                         mIsSaved = false;
-                        mSaveRecipeIV.setImageResource(R.drawable.ic_save_transparent);
+                        mSaveRecipeIV.setImageResource(R.drawable.ic_save_black_24dp);
                     }
                 }
             });
@@ -80,13 +93,20 @@ public class RecipeDetailActivity extends AppCompatActivity{
         mSaveRecipeIV.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(mRecipe != null){
+                if(mRecipeSearchResult != null){
                     if(!mIsSaved){
-                        mRecipeViewModel.insertRecipe(mRecipe);
+                        //mRecipeViewModel.insertRecipe(mRecipeData);
                     } else {
-                        mRecipeViewModel.deleteRecipe(mRecipe);
+                        //mRecipeViewModel.deleteRecipe(mRecipeData);
                     }
                 }
+            }
+        });
+
+        mAddIngredientsToListIV.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                //Add the ingredients listed in the recipe to the grocery list
             }
         });
     }
