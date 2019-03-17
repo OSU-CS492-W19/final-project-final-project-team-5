@@ -1,11 +1,13 @@
 package com.example.grocerylist;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ClipData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -20,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +30,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.grocerylist.data.Item.ItemData;
+import com.example.grocerylist.utils.RecipeUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GroceryAdapter.OnItemCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements GroceryAdapter.On
     private Toast mToast;
     private DrawerLayout mDrawerLayout;
     private ItemViewModel mItemViewModel;
+
 
 
     @Override
@@ -115,16 +121,53 @@ public class MainActivity extends AppCompatActivity implements GroceryAdapter.On
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.grocery_list_detail, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            case R.id.action_share:
+                shareGroceryList();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    public List<String> getGroceryList(){
+        List<ItemData> list = mGroceryAdapter.getmGroceryItems();
+        List<String> groceryList = new ArrayList<>();
+        for(ItemData i :list){
+            groceryList.add(i.item);
+        }
+        return groceryList;
+    }
+    public void shareGroceryList(){
+        if( mItemViewModel.getAllItems() != null){
+            List<String> groceryList = getGroceryList();
+            StringBuilder sb = new StringBuilder();
+            String title = "Grocery List: ";
+            String newline = "\n";
+            sb.append(title);
+            sb.append(newline);
+            for(String s: groceryList){
+                sb.append(s);
+                sb.append(newline);
+            }
+            ShareCompat.IntentBuilder.from(this)
+                    .setType("text/plain")
+                    .setChooserTitle(R.string.share_chooser_title)
+                    .setText(sb.toString())
+                    .startChooser();
+        }
+
+    }
     @Override
     public void onItemCheckedChanged(ItemData item, boolean b){
         if (mToast != null){
