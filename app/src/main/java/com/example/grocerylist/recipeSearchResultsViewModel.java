@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.LiveData;
 
 import com.example.grocerylist.data.recipeSearchResult;
-import com.example.grocerylist.data.recipeSearchResultRespository;
+import com.example.grocerylist.data.recipeSearchResultRepository;
 import com.example.grocerylist.data.Status;
 
 import java.util.List;
@@ -14,10 +14,10 @@ public class recipeSearchResultsViewModel extends ViewModel {
     private LiveData<List<recipeSearchResult>> mSearchResults;
     private LiveData<Status> mLoadingStatus;
 
-    private recipeSearchResultRespository mRepository;
+    private recipeSearchResultRepository mRepository;
 
     public recipeSearchResultsViewModel() {
-        mRepository = new recipeSearchResultRespository();
+        mRepository = new recipeSearchResultRepository();
         mSearchResults = mRepository.getSearchResults();
         mLoadingStatus = mRepository.getLoadingStatus();
     }

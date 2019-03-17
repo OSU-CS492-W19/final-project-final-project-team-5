@@ -10,9 +10,9 @@ import java.util.List;
 
 import com.example.grocerylist.utils.RecipeUtils;
 
-public class recipeSearchResultRespository implements LoadSearchRecipesTask.AsyncCallback{
+public class recipeSearchResultRepository implements LoadSearchRecipesTask.AsyncCallback{
 
-    private static final String TAG = recipeSearchResultRespository.class.getSimpleName();
+    private static final String TAG = recipeSearchResultRepository.class.getSimpleName();
 
     private MutableLiveData<List<recipeSearchResult>> mSearchResults;
     private MutableLiveData<Status> mLoadingStatus;
@@ -21,7 +21,7 @@ public class recipeSearchResultRespository implements LoadSearchRecipesTask.Asyn
     private int mPage;
     private int mRecipes_per_page;
 
-    public recipeSearchResultRespository(){
+    public recipeSearchResultRepository(){
         mSearchResults = new MutableLiveData<>();
         mSearchResults.setValue(null);
 
