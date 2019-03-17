@@ -165,6 +165,15 @@ public class RecipeUtils {
         return recipeData;
     }
 
+    public static RecipeInfo recipeDataToInfo(RecipeData rd) {
+        RecipeInfo recipeInfo = new RecipeInfo();
+        Gson gson = new Gson();
+        recipeInfo.recipeInfox = gson.fromJson(rd.recipe_infox_json, RecipeInfox.class);
+        recipeInfo.recipeResult = parseRecipeJson(rd.recipe_result_json);
+
+        return recipeInfo;
+    }
+
     public static class RecipeInfo implements Serializable{
         public RecipeInfox recipeInfox;
         public RecipeResult recipeResult;
