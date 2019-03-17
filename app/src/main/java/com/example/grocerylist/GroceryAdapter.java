@@ -88,15 +88,6 @@ public class GroceryAdapter extends RecyclerView.Adapter<GroceryAdapter.GroceryV
         public GroceryViewHolder(final View itemView){
             super(itemView);
             mItemTV = itemView.findViewById(R.id.tv_item_text);
-
-            CheckBox checkBox = itemView.findViewById(R.id.item_checkbox);
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean b) {
-                    ItemData item = mGroceryItems.get(getAdapterPosition());
-                    mCheckedChangeListener.onItemCheckedChanged(item, b);
-                }
-            });
         }
 
         public void bind(ItemData item){
