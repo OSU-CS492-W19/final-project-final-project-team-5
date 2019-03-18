@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.grocerylist.data.LoadRecipeTask;
 import com.example.grocerylist.data.Recipe.RecipeData;
 import com.example.grocerylist.data.recipeSearchResult;
 import com.example.grocerylist.utils.RecipeUtils;
@@ -21,6 +22,7 @@ import java.io.IOException;
 
 import static com.example.grocerylist.utils.NetworkUtils.doHTTPGet;
 import static com.example.grocerylist.utils.RecipeUtils.buildRecipeURL;
+import static com.example.grocerylist.utils.RecipeUtils.makeRecipieData;
 import static com.example.grocerylist.utils.RecipeUtils.parseRecipeJson;
 
 public class RecipeDetailActivity extends AppCompatActivity{
@@ -64,15 +66,35 @@ public class RecipeDetailActivity extends AppCompatActivity{
 
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
 
+        mRecipeViewModel.getRecipeInfo().observe(this, new Observer<RecipeUtils.RecipeInfo>() {
+            @Override
+            public void onChanged(@Nullable RecipeUtils.RecipeInfo recipeInfo) {
+                if(recipeInfo.recipeResult != null && recipeInfo.recipeInfox != null){
+                    mRecipeNameTV.setText(recipeInfo.recipeInfox.Title);
+                    mRecipeInstructionsTV.setText(recipeInfo.recipeResult.Instructions);
+                }
+
+            }
+        });
+
         mRecipeSearchResult = null;
         Intent intent = getIntent();
         if(intent != null && intent.hasExtra(RecipeUtils.EXTRA_RECIPE_SEARCH_RESULT)){
             Log.d(TAG, "Intent is not null.");
             mRecipeSearchResult = (recipeSearchResult) intent.getSerializableExtra(RecipeUtils.EXTRA_RECIPE_SEARCH_RESULT);
-            String recipeURL = buildRecipeURL(mRecipeSearchResult.RecipeID);
-            Log.d(TAG, "Recipe Title: " + mRecipeSearchResult.Title);
-            mRecipeNameTV.setText(mRecipeSearchResult.Title);
 
+            Log.d(TAG, "Recipe Title: " + mRecipeSearchResult.Title);
+
+            RecipeUtils.RecipeInfox recipeInfox = new RecipeUtils.RecipeInfox();
+            recipeInfox.Title = mRecipeSearchResult.Title;
+            recipeInfox.Category = mRecipeSearchResult.Category;
+            recipeInfox.Cuisine = mRecipeSearchResult.Cuisine;
+            recipeInfox.Microcategory = mRecipeSearchResult.Microcategory;
+            recipeInfox.RecipeID = mRecipeSearchResult.RecipeID;
+            recipeInfox.ReviewCount = mRecipeSearchResult.ReviewCount;
+            recipeInfox.Servings = mRecipeSearchResult.Servings;
+            recipeInfox.StarRating = mRecipeSearchResult.StarRating;
+            recipeInfox.Subcategory = mRecipeSearchResult.Subcategory;
 
             //TODO: parse RecipeData, RecipeInfo, RecipeInfox, Ingredients, etc.
 
@@ -88,6 +110,15 @@ public class RecipeDetailActivity extends AppCompatActivity{
                     }
                 }
             });
+
+            if( mRecipeViewModel.getRecipeByName(recipeInfox.RecipeID).getValue() == null){
+                mRecipeViewModel.loadRecipe(recipeInfox);
+            }
+            else{
+                RecipeData data = mRecipeViewModel.getRecipeByName(recipeInfox.RecipeID).getValue();
+                RecipeUtils.RecipeInfo recipeInfo = RecipeUtils.recipeDataToInfo(data);
+                mRecipeViewModel.setRecipeInfo(recipeInfo);
+            }
         }
 
         mSaveRecipeIV.setOnClickListener(new View.OnClickListener(){
@@ -95,9 +126,11 @@ public class RecipeDetailActivity extends AppCompatActivity{
             public void onClick(View view){
                 if(mRecipeSearchResult != null){
                     if(!mIsSaved){
-                        //mRecipeViewModel.insertRecipe(mRecipeData);
+                        RecipeUtils.RecipeInfo recipeInfo = mRecipeViewModel.getRecipeInfo().getValue();
+                        mRecipeViewModel.insertRecipe(makeRecipieData(recipeInfo.recipeInfox, recipeInfo.recipeResult) );
                     } else {
-                        //mRecipeViewModel.deleteRecipe(mRecipeData);
+                        RecipeUtils.RecipeInfo recipeInfo = mRecipeViewModel.getRecipeInfo().getValue();
+                        mRecipeViewModel.deleteRecipe(makeRecipieData(recipeInfo.recipeInfox, recipeInfo.recipeResult));
                     }
                 }
             }
