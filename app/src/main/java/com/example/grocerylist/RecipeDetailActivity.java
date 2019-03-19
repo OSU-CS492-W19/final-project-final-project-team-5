@@ -43,6 +43,7 @@ public class RecipeDetailActivity extends AppCompatActivity{
     private ItemViewModel mItemViewModel;
     private RecipeViewModel mRecipeViewModel;
     private recipeSearchResult mRecipeSearchResult;
+    private RecipeUtils.RecipeInfo mRecipeInfo;
     private boolean mIsSaved = false;
 
     @Override
@@ -82,13 +83,15 @@ public class RecipeDetailActivity extends AppCompatActivity{
             }
         });
 
+        mRecipeInfo = null;
         mRecipeSearchResult = null;
         Intent intent = getIntent();
-        if(intent != null && intent.hasExtra(RecipeUtils.EXTRA_RECIPE_SEARCH_RESULT)){
-            Log.d(TAG, "Intent is not null.");
+        if(intent != null && intent.hasExtra(RecipeUtils.EXTRA_RECIPE_SEARCH_RESULT)){ //if the user clicks on an item from the recipeSearchActivity
+
             mRecipeSearchResult = (recipeSearchResult) intent.getSerializableExtra(RecipeUtils.EXTRA_RECIPE_SEARCH_RESULT);
 
             Log.d(TAG, "Recipe Title: " + mRecipeSearchResult.Title);
+            Log.d(TAG, "RecipeID: " + mRecipeSearchResult.RecipeID);
 
             RecipeUtils.RecipeInfox recipeInfox = new RecipeUtils.RecipeInfox();
             recipeInfox.Title = mRecipeSearchResult.Title;
@@ -100,8 +103,6 @@ public class RecipeDetailActivity extends AppCompatActivity{
             recipeInfox.Servings = mRecipeSearchResult.Servings;
             recipeInfox.StarRating = mRecipeSearchResult.StarRating;
             recipeInfox.Subcategory = mRecipeSearchResult.Subcategory;
-
-            //TODO: parse RecipeData, RecipeInfo, RecipeInfox, Ingredients, etc.
 
             mRecipeViewModel.getRecipeByName(mRecipeSearchResult.RecipeID).observe(this, new Observer<RecipeData>() {
                 @Override
@@ -125,6 +126,35 @@ public class RecipeDetailActivity extends AppCompatActivity{
                 mRecipeViewModel.setRecipeInfo(recipeInfo);
             }
         }
+        else if(intent != null && intent.hasExtra(RecipeUtils.EXTRA_RECIPE_INFO)){ //if the user clicks on an item from the SavedRecipeActivity
+
+            mRecipeInfo = (RecipeUtils.RecipeInfo) intent.getSerializableExtra(RecipeUtils.EXTRA_RECIPE_INFO);
+
+            Log.d(TAG, "Recipe Title: " + mRecipeInfo.recipeInfox.Title);
+            Log.d(TAG, "RecipeID: " + mRecipeInfo.recipeInfox.RecipeID);
+
+            mRecipeViewModel.getRecipeByName(mRecipeInfo.recipeInfox.RecipeID).observe(this, new Observer<RecipeData>() {
+                @Override
+                public void onChanged(@Nullable RecipeData recipeData) {
+                    if(recipeData != null){
+                        mIsSaved = true;
+                        mSaveRecipeIV.setImageResource(R.drawable.ic_save_transparent);
+                    } else {
+                        mIsSaved = false;
+                        mSaveRecipeIV.setImageResource(R.drawable.ic_save_black_24dp);
+                    }
+                }
+            });
+
+            if( mRecipeViewModel.getRecipeByName(mRecipeInfo.recipeInfox.RecipeID).getValue() == null){
+                mRecipeViewModel.loadRecipe(mRecipeInfo.recipeInfox);
+            }
+            else{
+                RecipeData data = mRecipeViewModel.getRecipeByName(mRecipeInfo.recipeInfox.RecipeID).getValue();
+                RecipeUtils.RecipeInfo recipeInfo = RecipeUtils.recipeDataToInfo(data);
+                mRecipeViewModel.setRecipeInfo(recipeInfo);
+            }
+        }
 
         mSaveRecipeIV.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -136,6 +166,13 @@ public class RecipeDetailActivity extends AppCompatActivity{
                     } else {
                         RecipeUtils.RecipeInfo recipeInfo = mRecipeViewModel.getRecipeInfo().getValue();
                         mRecipeViewModel.deleteRecipe(makeRecipieData(recipeInfo.recipeInfox, recipeInfo.recipeResult));
+                    }
+                }
+                if(mRecipeInfo != null){
+                    if(!mIsSaved){
+                        mRecipeViewModel.insertRecipe(makeRecipieData(mRecipeInfo.recipeInfox, mRecipeInfo.recipeResult) );
+                    } else {
+                        mRecipeViewModel.deleteRecipe(makeRecipieData(mRecipeInfo.recipeInfox, mRecipeInfo.recipeResult));
                     }
                 }
             }
