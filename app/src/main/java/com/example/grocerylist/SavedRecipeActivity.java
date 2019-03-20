@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,8 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeInfo
     private RecyclerView mRecipeListRV;
     private RecipeInfoAdapter mRecipeAdapter;
     private DrawerLayout mDrawerLayout;
+
+    private static String TAG = SavedRecipeActivity.class.getSimpleName();
 
 
     @Override
@@ -125,6 +128,7 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeInfo
     @Override
     public void onItemClicked(RecipeUtils.RecipeInfo recipeInfo) {
         Intent RecipeDetailIntent = new Intent(this, RecipeDetailActivity.class);
+        Log.d(TAG, "Clicked on Recipe with ID: " + recipeInfo.recipeResult.RecipeID);
         RecipeDetailIntent.putExtra(RecipeUtils.EXTRA_RECIPE_INFO, recipeInfo);
         startActivity(RecipeDetailIntent);
     }

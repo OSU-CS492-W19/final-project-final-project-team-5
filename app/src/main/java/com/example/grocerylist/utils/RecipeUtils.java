@@ -147,7 +147,7 @@ public class RecipeUtils {
     public static RecipeResult parseRecipeJson(String json) {
         Gson gson = new Gson();
         RecipeResult result = gson.fromJson(json, RecipeResult.class);
-        if (result != null && result != null) {
+        if (result != null) {
             return result;
         } else {
             return null;
