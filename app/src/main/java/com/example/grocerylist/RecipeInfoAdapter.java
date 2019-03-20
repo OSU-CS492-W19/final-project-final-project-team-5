@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.grocerylist.utils.RecipeUtils;
@@ -15,6 +13,7 @@ import com.example.grocerylist.utils.RecipeUtils;
 import java.util.ArrayList;
 
 public class RecipeInfoAdapter extends RecyclerView.Adapter<RecipeInfoAdapter.RecipeViewHolder> {
+   // private ArrayList<RecipeUtils.RecipeInfo> mRecipeList;
     private ArrayList<RecipeUtils.RecipeInfo> mRecipeList;
     private OnItemClickListener mItemClickListener;
 
@@ -101,7 +100,7 @@ public class RecipeInfoAdapter extends RecyclerView.Adapter<RecipeInfoAdapter.Re
 
         @Override
         public void onClick(View v) {
-            RecipeUtils.RecipeInfo recipeInfo = mRecipeList.get(getAdapterPosition());
+            RecipeUtils.RecipeInfo recipeInfo = mRecipeList.get(adapterPositionToArrayIndex(getAdapterPosition()));
             mItemClickListener.onItemClicked(recipeInfo);
         }
     }
