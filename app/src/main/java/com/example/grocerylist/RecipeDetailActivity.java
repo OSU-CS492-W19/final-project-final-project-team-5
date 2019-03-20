@@ -4,9 +4,16 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -27,15 +34,14 @@ import static com.example.grocerylist.utils.RecipeUtils.buildRecipeURL;
 import static com.example.grocerylist.utils.RecipeUtils.makeRecipieData;
 import static com.example.grocerylist.utils.RecipeUtils.parseRecipeJson;
 
-public class RecipeDetailActivity extends AppCompatActivity{
+public class RecipeDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
 
     private TextView mRecipeNameTV;
     private TextView mRecipeInstructionsTV;
     private TextView mRecipeIngredients;
-
-    private Toast mToast;
+    private DrawerLayout mDrawerLayout;
 
     private ImageView mAddIngredientsToListIV;
     private ImageView mSaveRecipeIV;
@@ -56,21 +62,30 @@ public class RecipeDetailActivity extends AppCompatActivity{
 
         mRecipeNameTV = findViewById(R.id.tv_recipe_title);
 
-
         mRecipeNameTV = findViewById(R.id.tv_recipe_name);
         mRecipeIngredients = findViewById(R.id.tv_ingredients);
         mRecipeInstructionsTV = findViewById(R.id.tv_instructions);
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.nv_nav_drawer);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         mItemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
 
         mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
 
-        mToast = null;
-
         mRecipeViewModel.getRecipeInfo().observe(this, new Observer<RecipeUtils.RecipeInfo>() {
             @Override
             public void onChanged(@Nullable RecipeUtils.RecipeInfo recipeInfo) {
-                if(recipeInfo.recipeResult != null && recipeInfo.recipeInfox != null){
+                if(recipeInfo != null && recipeInfo.recipeResult != null && recipeInfo.recipeInfox != null){
                     mRecipeNameTV.setText(recipeInfo.recipeInfox.Title);
                     mRecipeInstructionsTV.setText("Instructions: \n" + recipeInfo.recipeResult.Instructions);
                     String ingredients = "Ingredients: \n";
@@ -184,5 +199,36 @@ public class RecipeDetailActivity extends AppCompatActivity{
                 //TODO add ingredients from recipe to groceryList/ItemDatabase
             }
         });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        mDrawerLayout.closeDrawers();
+        switch (menuItem.getItemId()) {
+            case R.id.nav_search:
+                Intent search = new Intent(this, recipeSearchActivity.class);
+                startActivity(search);
+                return true;
+            case R.id.nav_saved_recipes:
+                Intent savedRecipes = new Intent(this, SavedRecipeActivity.class);
+                startActivity(savedRecipes);
+                return true;
+            case R.id.nav_grocery_list:
+                Intent MainActivityIntent = new Intent(this, MainActivity.class);
+                startActivity(MainActivityIntent);
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
