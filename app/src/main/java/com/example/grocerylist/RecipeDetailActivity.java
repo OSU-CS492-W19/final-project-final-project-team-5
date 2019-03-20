@@ -90,7 +90,11 @@ public class RecipeDetailActivity extends AppCompatActivity implements Navigatio
                     mRecipeInstructionsTV.setText("Instructions: \n" + recipeInfo.recipeResult.Instructions);
                     String ingredients = "Ingredients: \n";
                     for(RecipeUtils.Ingredient ingr : recipeInfo.recipeResult.Ingredients){
-                        ingredients += ("- " + ingr.Name + "\n");
+                        String quan = "";
+                        if (ingr.DisplayQuantity!= null && ingr.DisplayQuantity.trim().length() > 0){
+                            quan = ingr.DisplayQuantity +" "+ ingr.Unit + " ";
+                        }
+                        ingredients += ("- "+ quan +ingr.Name + "\n");
                     }
                     mRecipeIngredients.setText(ingredients);
                 }
@@ -198,9 +202,15 @@ public class RecipeDetailActivity extends AppCompatActivity implements Navigatio
             public void onClick(View view) {
                 if(mRecipeInfo != null) {
                     for (RecipeUtils.Ingredient ingr : mRecipeInfo.recipeResult.Ingredients) {
+                        String quan = "";
+                        if (ingr.DisplayQuantity!= null && ingr.DisplayQuantity.trim().length() > 0){
+                            quan = ingr.DisplayQuantity +" "+ ingr.Unit + " ";
+                        }
                         ItemData item = new ItemData();
-                        item.item = ingr.Name;
+                        item.item = quan + ingr.Name;
                         mItemViewModel.insertItemData(item);
+                        Intent MainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(MainActivityIntent);
                     }
                 }
             }
