@@ -196,7 +196,13 @@ public class RecipeDetailActivity extends AppCompatActivity implements Navigatio
         mAddIngredientsToListIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO add ingredients from recipe to groceryList/ItemDatabase
+                if(mRecipeInfo != null) {
+                    for (RecipeUtils.Ingredient ingr : mRecipeInfo.recipeResult.Ingredients) {
+                        ItemData item = new ItemData();
+                        item.item = ingr.Name;
+                        mItemViewModel.insertItemData(item);
+                    }
+                }
             }
         });
     }
