@@ -40,7 +40,7 @@ public class RecipeInfoAdapter extends RecyclerView.Adapter<RecipeInfoAdapter.Re
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.saved_recipe_item, viewGroup, false);////TODO : Use Same xml as the search activity
+        View itemView = inflater.inflate(R.layout.saved_recipe_item, viewGroup, false);
         return new RecipeViewHolder(itemView);
     }
 
@@ -67,13 +67,14 @@ public class RecipeInfoAdapter extends RecyclerView.Adapter<RecipeInfoAdapter.Re
         public RecipeViewHolder(final View itemView){
             super(itemView);
             mTitle = itemView.findViewById(R.id.tv_recipe_title);
+            /*
             mCategory = itemView.findViewById(R.id.tv_recipe_category);;
             mCuisine = itemView.findViewById(R.id.tv_recipe_cuisine); //sometimes there
             mMicrocategory = itemView.findViewById(R.id.tv_recipe_microcategory);//almost never filled
             mReviewCount = itemView.findViewById(R.id.tv_recipe_review_count);
             mServings = itemView.findViewById(R.id.tv_recipe_servings);
             mStarRating = itemView.findViewById(R.id.tv_recipe_star_rating);
-            mSubcategory = itemView.findViewById(R.id.tv_recipe_subcategory);
+            mSubcategory = itemView.findViewById(R.id.tv_recipe_subcategory);*/
             itemView.setOnClickListener(this);
 
         }
@@ -81,13 +82,14 @@ public class RecipeInfoAdapter extends RecyclerView.Adapter<RecipeInfoAdapter.Re
         public void bind(RecipeUtils.RecipeInfo item){
 
             mTitle.setText(item.recipeInfox.Title);
+            /*
             mCategory.setText(item.recipeInfox.Category);
             mCuisine.setText(item.recipeInfox.Cuisine);
             mMicrocategory.setText(item.recipeInfox.Microcategory);//almost never filled
             mReviewCount.setText(item.recipeInfox.ReviewCount);
             mServings.setText(item.recipeInfox.Servings);
             mStarRating.setText(item.recipeInfox.StarRating);
-            mSubcategory.setText(item.recipeInfox.Subcategory);
+            mSubcategory.setText(item.recipeInfox.Subcategory);*/
 
         }
 
