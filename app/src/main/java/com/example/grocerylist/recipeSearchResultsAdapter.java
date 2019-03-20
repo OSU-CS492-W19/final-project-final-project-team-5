@@ -40,7 +40,7 @@ public class recipeSearchResultsAdapter extends RecyclerView.Adapter<recipeSearc
     @Override
     public recipeSearchResultsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.recipe_search_item, parent, false);
+        View itemView = inflater.inflate(R.layout.saved_recipe_item, parent, false);
         return new recipeSearchResultsViewHolder(itemView);
     }
 
@@ -51,24 +51,39 @@ public class recipeSearchResultsAdapter extends RecyclerView.Adapter<recipeSearc
 
     class recipeSearchResultsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTitle;
-        private TextView mID;
+        private TextView mCategory;
+        private TextView mCuisine; //sometimes there
+        private TextView mReviewCount;
         private TextView mServings;
         private TextView mStarRating;
 
         public recipeSearchResultsViewHolder(View itemView) {
             super(itemView);
-            mTitle = itemView.findViewById(R.id.tv_title);
-        /*    mID = itemView.findViewById(R.id.tv_recipe_id);
-            mServings = itemView.findViewById(R.id.tv_servings);
-            mStarRating = itemView.findViewById(R.id.tv_star_rating);*/
+            mTitle = itemView.findViewById(R.id.tv_recipe_title);
+            mCategory = itemView.findViewById(R.id.tv_recipe_category);;
+            mCuisine = itemView.findViewById(R.id.tv_recipe_cuisine); //sometimes there
+            mReviewCount = itemView.findViewById(R.id.tv_recipe_review_count);
+            mServings = itemView.findViewById(R.id.tv_recipe_servings);
+            mStarRating = itemView.findViewById(R.id.tv_recipe_star_rating);
             itemView.setOnClickListener(this);
         }
 
         public void bind(recipeSearchResult result) {
             mTitle.setText(result.Title);
-       //     mID.setText(result.RecipeID);
-       //     mServings.setText(result.Servings);
-       //     mStarRating.setText(result.StarRating);
+            if (result.Category != null && result.Category.trim().length() > 0 ) {
+                mCategory.setText(result.Category);
+            }else {
+                mCategory.setVisibility(View.GONE);
+            }
+            if (result.Cuisine != null && result.Cuisine.trim().length() > 0 ) {
+                mCuisine.setText(result.Cuisine);
+            }else {
+                mCuisine.setVisibility(View.GONE);
+            }
+
+            mReviewCount.setText(result.ReviewCount);
+            mServings.setText(result.Servings);
+            mStarRating.setText(result.StarRating);
 
         }
 
