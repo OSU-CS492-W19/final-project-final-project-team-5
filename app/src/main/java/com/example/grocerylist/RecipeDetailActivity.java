@@ -245,6 +245,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements Navigatio
                 else{
                     mIngredientsToast = Toast.makeText(getApplicationContext(), "Ingredients added to Grocery List", Toast.LENGTH_LONG);
                     mIngredientsToast.show();
+                    Intent MainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(MainActivityIntent);
                 }
             }
         });
