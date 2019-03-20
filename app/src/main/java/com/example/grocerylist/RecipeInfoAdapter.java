@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.grocerylist.utils.RecipeUtils;
@@ -58,22 +59,18 @@ public class RecipeInfoAdapter extends RecyclerView.Adapter<RecipeInfoAdapter.Re
         private TextView mTitle;
         private TextView mCategory;
         private TextView mCuisine; //sometimes there
-        private TextView mMicrocategory;//almost never filled
         private TextView mReviewCount;
         private TextView mServings;
         private TextView mStarRating;
-        private TextView mSubcategory;
 
         public RecipeViewHolder(final View itemView){
             super(itemView);
             mTitle = itemView.findViewById(R.id.tv_recipe_title);
             mCategory = itemView.findViewById(R.id.tv_recipe_category);;
             mCuisine = itemView.findViewById(R.id.tv_recipe_cuisine); //sometimes there
-            mMicrocategory = itemView.findViewById(R.id.tv_recipe_microcategory);//almost never filled
             mReviewCount = itemView.findViewById(R.id.tv_recipe_review_count);
             mServings = itemView.findViewById(R.id.tv_recipe_servings);
             mStarRating = itemView.findViewById(R.id.tv_recipe_star_rating);
-            mSubcategory = itemView.findViewById(R.id.tv_recipe_subcategory);
             itemView.setOnClickListener(this);
 
         }
@@ -81,13 +78,20 @@ public class RecipeInfoAdapter extends RecyclerView.Adapter<RecipeInfoAdapter.Re
         public void bind(RecipeUtils.RecipeInfo item){
 
             mTitle.setText(item.recipeInfox.Title);
-            mCategory.setText(item.recipeInfox.Category);
-            mCuisine.setText(item.recipeInfox.Cuisine);
-            mMicrocategory.setText(item.recipeInfox.Microcategory);//almost never filled
+            if (item.recipeInfox.Category != null && item.recipeInfox.Category.trim().length() > 0 ) {
+                mCategory.setText(item.recipeInfox.Category);
+            }else {
+                mCategory.setVisibility(View.GONE);
+            }
+            if (item.recipeInfox.Cuisine != null && item.recipeInfox.Cuisine.trim().length() > 0 ) {
+                mCuisine.setText(item.recipeInfox.Cuisine);
+            }else {
+                mCuisine.setVisibility(View.GONE);
+            }
+
             mReviewCount.setText(item.recipeInfox.ReviewCount);
             mServings.setText(item.recipeInfox.Servings);
             mStarRating.setText(item.recipeInfox.StarRating);
-            mSubcategory.setText(item.recipeInfox.Subcategory);
 
         }
 
