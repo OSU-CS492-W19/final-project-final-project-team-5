@@ -46,6 +46,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements Navigatio
     private ImageView mAddIngredientsToListIV;
     private ImageView mSaveRecipeIV;
 
+    private Toast mToast;
+    private Toast mIngredientsToast;
     private ItemViewModel mItemViewModel;
     private RecipeViewModel mRecipeViewModel;
     private recipeSearchResult mRecipeSearchResult;
@@ -178,16 +180,36 @@ public class RecipeDetailActivity extends AppCompatActivity implements Navigatio
                     if(!mIsSaved){
                         RecipeUtils.RecipeInfo recipeInfo = mRecipeViewModel.getRecipeInfo().getValue();
                         mRecipeViewModel.insertRecipe(makeRecipieData(recipeInfo.recipeInfox, recipeInfo.recipeResult) );
+                        if(mToast != null){
+                            mToast.cancel();
+                        }
+                        mToast = Toast.makeText(getApplicationContext(), "Recipe '" + recipeInfo.recipeInfox.Title + "' added to Saved Recipes", Toast.LENGTH_LONG);
+                        mToast.show();
                     } else {
                         RecipeUtils.RecipeInfo recipeInfo = mRecipeViewModel.getRecipeInfo().getValue();
                         mRecipeViewModel.deleteRecipe(makeRecipieData(recipeInfo.recipeInfox, recipeInfo.recipeResult));
+                        if(mToast != null){
+                            mToast.cancel();
+                        }
+                        mToast = Toast.makeText(getApplicationContext(), "Recipe '" + recipeInfo.recipeInfox.Title + "' removed from Saved Recipes", Toast.LENGTH_LONG);
+                        mToast.show();
                     }
                 }
                 if(mRecipeInfo != null){
                     if(!mIsSaved){
                         mRecipeViewModel.insertRecipe(makeRecipieData(mRecipeInfo.recipeInfox, mRecipeInfo.recipeResult) );
+                        if(mToast != null){
+                            mToast.cancel();
+                        }
+                        mToast = Toast.makeText(getApplicationContext(), "Recipe '" + mRecipeInfo.recipeInfox.Title + "' added to Saved Recipes", Toast.LENGTH_LONG);
+                        mToast.show();
                     } else {
                         mRecipeViewModel.deleteRecipe(makeRecipieData(mRecipeInfo.recipeInfox, mRecipeInfo.recipeResult));
+                        if(mToast != null){
+                            mToast.cancel();
+                        }
+                        mToast = Toast.makeText(getApplicationContext(), "Recipe '" + mRecipeInfo.recipeInfox.Title + "' removed from Saved Recipes", Toast.LENGTH_LONG);
+                        mToast.show();
                     }
                 }
             }
@@ -196,12 +218,23 @@ public class RecipeDetailActivity extends AppCompatActivity implements Navigatio
         mAddIngredientsToListIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mRecipeInfo != null) {
+                if (mRecipeInfo != null) {
                     for (RecipeUtils.Ingredient ingr : mRecipeInfo.recipeResult.Ingredients) {
                         ItemData item = new ItemData();
                         item.item = ingr.Name;
                         mItemViewModel.insertItemData(item);
                     }
+                }
+                if (mIngredientsToast != null) {
+                    mIngredientsToast.cancel();
+                }
+                if (mRecipeInfo != null){
+                    mIngredientsToast = Toast.makeText(getApplicationContext(), "Ingredients For '" + mRecipeInfo.recipeInfox.Title + "' added to Grocery List", Toast.LENGTH_LONG);
+                    mIngredientsToast.show();
+                }
+                else{
+                    mIngredientsToast = Toast.makeText(getApplicationContext(), "Ingredients added to Grocery List", Toast.LENGTH_LONG);
+                    mIngredientsToast.show();
                 }
             }
         });
