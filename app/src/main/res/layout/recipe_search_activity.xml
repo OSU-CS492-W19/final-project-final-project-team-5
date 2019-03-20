@@ -1,45 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:layout_width="match_parent"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <EditText
-        android:id="@+id/et_search_entry"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.grocerylist.recipeSearchActivity">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:hint="Find Recipes by Name"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_do_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Search Recipes"/>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_recipe_search_items"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/et_search_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:hint="Find Recipes by Name"/>
 
-    <TextView
-        android:id="@+id/tv_loading_error_message"
+        <Button
+            android:id="@+id/btn_do_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search Recipes"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_recipe_search_items"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_loading_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:padding="16dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="@android:color/holo_red_light"
+            android:textColor="#fff"
+            android:visibility="invisible"
+            android:text="Error Loading Content." />
+
+        <ProgressBar
+            android:id="@+id/pb_loading_indicator_search"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_margin="32dp"
+            android:layout_gravity="top|center_horizontal"
+            android:visibility="invisible"/>
+    </LinearLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nv_nav_drawer"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:padding="16dp"
-        android:layout_marginHorizontal="8dp"
-        android:background="@android:color/holo_red_light"
-        android:textColor="#fff"
-        android:visibility="invisible"
-        android:text="Error Loading Content." />
-
-    <ProgressBar
-        android:id="@+id/pb_loading_indicator_search"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_margin="32dp"
-        android:layout_gravity="top|center_horizontal"
-        android:visibility="invisible"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/navigation_drawer"/>
+</android.support.v4.widget.DrawerLayout>

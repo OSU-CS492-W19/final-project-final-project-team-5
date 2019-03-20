@@ -19,7 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-
             android:name=".RecipeDetailActivity"
             android:label="@string/nav_recipe_detail" />
         <activity
@@ -27,13 +26,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/nav_saved_recipes" />
         <activity
-
             android:name=".recipeSearchActivity"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Search Recipes" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

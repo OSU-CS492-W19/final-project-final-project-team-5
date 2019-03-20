@@ -43,7 +43,7 @@ public class SavedRecipeActivity extends AppCompatActivity implements RecipeInfo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.saved_recipes_activity);
 
-        mRecipeListRV = findViewById(R.id.rv_saved_recipes_list);//TODO: Update with corect
+        mRecipeListRV = findViewById(R.id.rv_saved_recipes_list);
         mRecipeListRV.setLayoutManager(new LinearLayoutManager(this));
         mRecipeListRV.setHasFixedSize(true);
 

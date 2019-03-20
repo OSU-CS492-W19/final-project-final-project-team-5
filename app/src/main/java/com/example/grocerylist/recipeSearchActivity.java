@@ -10,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.support.v4.view.GravityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.support.annotation.Nullable;
@@ -38,7 +39,7 @@ import com.example.grocerylist.data.Status;
 import java.io.Serializable;
 import java.util.List;
 
-public class recipeSearchActivity extends AppCompatActivity implements recipeSearchResultsAdapter.OnResultItemClickListener{
+public class recipeSearchActivity extends AppCompatActivity implements recipeSearchResultsAdapter.OnResultItemClickListener, NavigationView.OnNavigationItemSelectedListener{
 
     private RecyclerView mRecipesListRV;
     private ProgressBar mProgressBarPB;
@@ -46,6 +47,7 @@ public class recipeSearchActivity extends AppCompatActivity implements recipeSea
     private recipeSearchResultsAdapter mAdapter;
     private TextView mLoadingErrorMessageTV;
     private EditText mSearchEntry;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,18 @@ public class recipeSearchActivity extends AppCompatActivity implements recipeSea
         mRecipesListRV.setAdapter(mAdapter);
         mRecipesListRV.setLayoutManager(new LinearLayoutManager(this));
         mRecipesListRV.setHasFixedSize(true);
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.nv_nav_drawer);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         mrecipeSearchResultsViewModel = ViewModelProviders.of(this).get(recipeSearchResultsViewModel.class);
 
@@ -116,5 +130,34 @@ public class recipeSearchActivity extends AppCompatActivity implements recipeSea
         intent.putExtra(RecipeUtils.EXTRA_RECIPE_SEARCH_RESULT, result);
         startActivity(intent);
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        mDrawerLayout.closeDrawers();
+        switch (menuItem.getItemId()) {
+            case R.id.nav_search:
+                return true;
+            case R.id.nav_saved_recipes:
+                Intent savedRecipes = new Intent(this, SavedRecipeActivity.class);
+                startActivity(savedRecipes);
+                return true;
+            case R.id.nav_grocery_list:
+                Intent MainActivityIntent = new Intent(this, MainActivity.class);
+                startActivity(MainActivityIntent);
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
